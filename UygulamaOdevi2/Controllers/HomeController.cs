@@ -10,6 +10,7 @@ namespace UygulamaOdevi2.Controllers
     {
         public ActionResult Index()
         {
+            new RDBMSController("s");
             return View();
         }
 
