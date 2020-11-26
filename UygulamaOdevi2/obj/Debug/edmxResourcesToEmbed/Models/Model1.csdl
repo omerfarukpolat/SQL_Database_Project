@@ -1,0 +1,337 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="KONFERANSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="CONFERENCE">
+    <Key>
+      <PropertyRef Name="ConfID" />
+    </Key>
+    <Property Name="ConfID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CreationDateTime" Type="DateTime" Precision="3" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="ShortName" Type="String" MaxLength="19" FixedLength="false" Unicode="false" />
+    <Property Name="Year" Type="Int32" />
+    <Property Name="StartDate" Type="DateTime" Precision="0" />
+    <Property Name="EndDate" Type="DateTime" Precision="0" />
+    <Property Name="Submission_Deadline" Type="DateTime" Precision="0" />
+    <Property Name="CreatorUser" Type="Int32" />
+    <Property Name="WebSite" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="CONFERENCE_TAGS" Relationship="Self.FK__CONFERENC__ConfI__55F4C372" FromRole="CONFERENCE" ToRole="CONFERENCE_TAGS" />
+    <NavigationProperty Name="USERS" Relationship="Self.FK__CONFERENC__Creat__531856C7" FromRole="CONFERENCE" ToRole="USERS" />
+    <NavigationProperty Name="SUBMISSIONS" Relationship="Self.FK__SUBMISSIO__ConfI__6AEFE058" FromRole="CONFERENCE" ToRole="SUBMISSIONS" />
+  </EntityType>
+  <EntityType Name="CONFERENCE_TAGS">
+    <Key>
+      <PropertyRef Name="Tag" />
+    </Key>
+    <Property Name="ConfID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Tag" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="CONFERENCE" Relationship="Self.FK__CONFERENC__ConfI__55F4C372" FromRole="CONFERENCE_TAGS" ToRole="CONFERENCE" />
+  </EntityType>
+  <EntityType Name="COUNTRY">
+    <Key>
+      <PropertyRef Name="Country_Code" />
+    </Key>
+    <Property Name="Country_Code" Type="String" MaxLength="3" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="Country_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="COUNTRY_CITY" Relationship="Self.FK__COUNTRY_C__Count__5CA1C101" FromRole="COUNTRY" ToRole="COUNTRY_CITY" />
+    <NavigationProperty Name="USER_INFO" Relationship="Self.FK__USER_INFO__Count__5F7E2DAC" FromRole="COUNTRY" ToRole="USER_INFO" />
+    <NavigationProperty Name="USER_LOG" Relationship="Self.FK__USER_LOG__Countr__6442E2C9" FromRole="COUNTRY" ToRole="USER_LOG" />
+  </EntityType>
+  <EntityType Name="COUNTRY_CITY">
+    <Key>
+      <PropertyRef Name="CityID" />
+    </Key>
+    <Property Name="Country_Code" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+    <Property Name="CityID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="City_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="COUNTRY" Relationship="Self.FK__COUNTRY_C__Count__5CA1C101" FromRole="COUNTRY_CITY" ToRole="COUNTRY" />
+    <NavigationProperty Name="USER_INFO" Relationship="Self.FK__USER_INFO__City__6166761E" FromRole="COUNTRY_CITY" ToRole="USER_INFO" />
+    <NavigationProperty Name="USER_LOG" Relationship="Self.FK__USER_LOG__City__662B2B3B" FromRole="COUNTRY_CITY" ToRole="USER_LOG" />
+  </EntityType>
+  <EntityType Name="SUBMISSIONS">
+    <Key>
+      <PropertyRef Name="SubmissionID" />
+    </Key>
+    <Property Name="AuthenticationID" Type="Int32" />
+    <Property Name="ConfID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="SubmissionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="prevSubmissionID" Type="Int32" />
+    <NavigationProperty Name="CONFERENCE" Relationship="Self.FK__SUBMISSIO__ConfI__6AEFE058" FromRole="SUBMISSIONS" ToRole="CONFERENCE" />
+    <NavigationProperty Name="USERS" Relationship="Self.FK__SUBMISSIO__Authe__69FBBC1F" FromRole="SUBMISSIONS" ToRole="USERS" />
+    <NavigationProperty Name="SUBMISSIONS1" Relationship="Self.FK__SUBMISSIO__prevS__690797E6" FromRole="SUBMISSIONS" ToRole="SUBMISSIONS1" />
+    <NavigationProperty Name="SUBMISSIONS2" Relationship="Self.FK__SUBMISSIO__prevS__690797E6" FromRole="SUBMISSIONS1" ToRole="SUBMISSIONS" />
+  </EntityType>
+  <EntityType Name="USER_INFO">
+    <Key>
+      <PropertyRef Name="InfoID" />
+    </Key>
+    <Property Name="InfoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Salutation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="AuthenticationID" Type="Int32" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Affiliation" Type="Int32" />
+    <Property Name="primary_email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="secondary_email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="phone" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="fax" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="URL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="City" Type="Int32" />
+    <Property Name="Country" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+    <Property Name="Record_Creation_Date" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="COUNTRY1" Relationship="Self.FK__USER_INFO__Count__5F7E2DAC" FromRole="USER_INFO" ToRole="COUNTRY" />
+    <NavigationProperty Name="COUNTRY_CITY" Relationship="Self.FK__USER_INFO__City__6166761E" FromRole="USER_INFO" ToRole="COUNTRY_CITY" />
+    <NavigationProperty Name="USERS" Relationship="Self.FK__USER_INFO__Authe__607251E5" FromRole="USER_INFO" ToRole="USERS" />
+  </EntityType>
+  <EntityType Name="USER_LOG">
+    <Key>
+      <PropertyRef Name="LogID" />
+    </Key>
+    <Property Name="LogID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Salutation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="AuthenticationID" Type="Int32" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Affiliation" Type="Int32" />
+    <Property Name="primary_email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="secondary_email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="phone" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="fax" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="URL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="City" Type="Int32" />
+    <Property Name="Country" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+    <Property Name="Record_Creation_Date" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="COUNTRY1" Relationship="Self.FK__USER_LOG__Countr__6442E2C9" FromRole="USER_LOG" ToRole="COUNTRY" />
+    <NavigationProperty Name="COUNTRY_CITY" Relationship="Self.FK__USER_LOG__City__662B2B3B" FromRole="USER_LOG" ToRole="COUNTRY_CITY" />
+    <NavigationProperty Name="USERS" Relationship="Self.FK__USER_LOG__Authen__65370702" FromRole="USER_LOG" ToRole="USERS" />
+  </EntityType>
+  <EntityType Name="USERS">
+    <Key>
+      <PropertyRef Name="AuthenticationID" />
+    </Key>
+    <Property Name="AuthenticationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Username" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="CONFERENCE" Relationship="Self.FK__CONFERENC__Creat__531856C7" FromRole="USERS" ToRole="CONFERENCE" />
+    <NavigationProperty Name="SUBMISSIONS" Relationship="Self.FK__SUBMISSIO__Authe__69FBBC1F" FromRole="USERS" ToRole="SUBMISSIONS" />
+    <NavigationProperty Name="USER_INFO" Relationship="Self.FK__USER_INFO__Authe__607251E5" FromRole="USERS" ToRole="USER_INFO" />
+    <NavigationProperty Name="USER_LOG" Relationship="Self.FK__USER_LOG__Authen__65370702" FromRole="USERS" ToRole="USER_LOG" />
+  </EntityType>
+  <Association Name="FK__CONFERENC__ConfI__55F4C372">
+    <End Role="CONFERENCE" Type="Self.CONFERENCE" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="CONFERENCE_TAGS" Type="Self.CONFERENCE_TAGS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CONFERENCE">
+        <PropertyRef Name="ConfID" />
+      </Principal>
+      <Dependent Role="CONFERENCE_TAGS">
+        <PropertyRef Name="ConfID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CONFERENC__Creat__531856C7">
+    <End Role="USERS" Type="Self.USERS" Multiplicity="0..1" />
+    <End Role="CONFERENCE" Type="Self.CONFERENCE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="AuthenticationID" />
+      </Principal>
+      <Dependent Role="CONFERENCE">
+        <PropertyRef Name="CreatorUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__SUBMISSIO__ConfI__6AEFE058">
+    <End Role="CONFERENCE" Type="Self.CONFERENCE" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="SUBMISSIONS" Type="Self.SUBMISSIONS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CONFERENCE">
+        <PropertyRef Name="ConfID" />
+      </Principal>
+      <Dependent Role="SUBMISSIONS">
+        <PropertyRef Name="ConfID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__COUNTRY_C__Count__5CA1C101">
+    <End Role="COUNTRY" Type="Self.COUNTRY" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="COUNTRY_CITY" Type="Self.COUNTRY_CITY" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="COUNTRY">
+        <PropertyRef Name="Country_Code" />
+      </Principal>
+      <Dependent Role="COUNTRY_CITY">
+        <PropertyRef Name="Country_Code" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__USER_INFO__Count__5F7E2DAC">
+    <End Role="COUNTRY" Type="Self.COUNTRY" Multiplicity="0..1" />
+    <End Role="USER_INFO" Type="Self.USER_INFO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="COUNTRY">
+        <PropertyRef Name="Country_Code" />
+      </Principal>
+      <Dependent Role="USER_INFO">
+        <PropertyRef Name="Country" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__USER_LOG__Countr__6442E2C9">
+    <End Role="COUNTRY" Type="Self.COUNTRY" Multiplicity="0..1" />
+    <End Role="USER_LOG" Type="Self.USER_LOG" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="COUNTRY">
+        <PropertyRef Name="Country_Code" />
+      </Principal>
+      <Dependent Role="USER_LOG">
+        <PropertyRef Name="Country" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__USER_INFO__City__6166761E">
+    <End Role="COUNTRY_CITY" Type="Self.COUNTRY_CITY" Multiplicity="0..1" />
+    <End Role="USER_INFO" Type="Self.USER_INFO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="COUNTRY_CITY">
+        <PropertyRef Name="CityID" />
+      </Principal>
+      <Dependent Role="USER_INFO">
+        <PropertyRef Name="City" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__USER_LOG__City__662B2B3B">
+    <End Role="COUNTRY_CITY" Type="Self.COUNTRY_CITY" Multiplicity="0..1" />
+    <End Role="USER_LOG" Type="Self.USER_LOG" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="COUNTRY_CITY">
+        <PropertyRef Name="CityID" />
+      </Principal>
+      <Dependent Role="USER_LOG">
+        <PropertyRef Name="City" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__SUBMISSIO__Authe__69FBBC1F">
+    <End Role="USERS" Type="Self.USERS" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="SUBMISSIONS" Type="Self.SUBMISSIONS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="AuthenticationID" />
+      </Principal>
+      <Dependent Role="SUBMISSIONS">
+        <PropertyRef Name="AuthenticationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__SUBMISSIO__prevS__690797E6">
+    <End Role="SUBMISSIONS" Type="Self.SUBMISSIONS" Multiplicity="0..1" />
+    <End Role="SUBMISSIONS1" Type="Self.SUBMISSIONS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SUBMISSIONS">
+        <PropertyRef Name="SubmissionID" />
+      </Principal>
+      <Dependent Role="SUBMISSIONS1">
+        <PropertyRef Name="prevSubmissionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__USER_INFO__Authe__607251E5">
+    <End Role="USERS" Type="Self.USERS" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="USER_INFO" Type="Self.USER_INFO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="AuthenticationID" />
+      </Principal>
+      <Dependent Role="USER_INFO">
+        <PropertyRef Name="AuthenticationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__USER_LOG__Authen__65370702">
+    <End Role="USERS" Type="Self.USERS" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="USER_LOG" Type="Self.USER_LOG" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERS">
+        <PropertyRef Name="AuthenticationID" />
+      </Principal>
+      <Dependent Role="USER_LOG">
+        <PropertyRef Name="AuthenticationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="KONFERANSEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="CONFERENCE" EntityType="Self.CONFERENCE" />
+    <EntitySet Name="CONFERENCE_TAGS" EntityType="Self.CONFERENCE_TAGS" />
+    <EntitySet Name="COUNTRY" EntityType="Self.COUNTRY" />
+    <EntitySet Name="COUNTRY_CITY" EntityType="Self.COUNTRY_CITY" />
+    <EntitySet Name="SUBMISSIONS" EntityType="Self.SUBMISSIONS" />
+    <EntitySet Name="USER_INFO" EntityType="Self.USER_INFO" />
+    <EntitySet Name="USER_LOG" EntityType="Self.USER_LOG" />
+    <EntitySet Name="USERS" EntityType="Self.USERS" />
+    <AssociationSet Name="FK__CONFERENC__ConfI__55F4C372" Association="Self.FK__CONFERENC__ConfI__55F4C372">
+      <End Role="CONFERENCE" EntitySet="CONFERENCE" />
+      <End Role="CONFERENCE_TAGS" EntitySet="CONFERENCE_TAGS" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CONFERENC__Creat__531856C7" Association="Self.FK__CONFERENC__Creat__531856C7">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="CONFERENCE" EntitySet="CONFERENCE" />
+    </AssociationSet>
+    <AssociationSet Name="FK__SUBMISSIO__ConfI__6AEFE058" Association="Self.FK__SUBMISSIO__ConfI__6AEFE058">
+      <End Role="CONFERENCE" EntitySet="CONFERENCE" />
+      <End Role="SUBMISSIONS" EntitySet="SUBMISSIONS" />
+    </AssociationSet>
+    <AssociationSet Name="FK__COUNTRY_C__Count__5CA1C101" Association="Self.FK__COUNTRY_C__Count__5CA1C101">
+      <End Role="COUNTRY" EntitySet="COUNTRY" />
+      <End Role="COUNTRY_CITY" EntitySet="COUNTRY_CITY" />
+    </AssociationSet>
+    <AssociationSet Name="FK__USER_INFO__Count__5F7E2DAC" Association="Self.FK__USER_INFO__Count__5F7E2DAC">
+      <End Role="COUNTRY" EntitySet="COUNTRY" />
+      <End Role="USER_INFO" EntitySet="USER_INFO" />
+    </AssociationSet>
+    <AssociationSet Name="FK__USER_LOG__Countr__6442E2C9" Association="Self.FK__USER_LOG__Countr__6442E2C9">
+      <End Role="COUNTRY" EntitySet="COUNTRY" />
+      <End Role="USER_LOG" EntitySet="USER_LOG" />
+    </AssociationSet>
+    <AssociationSet Name="FK__USER_INFO__City__6166761E" Association="Self.FK__USER_INFO__City__6166761E">
+      <End Role="COUNTRY_CITY" EntitySet="COUNTRY_CITY" />
+      <End Role="USER_INFO" EntitySet="USER_INFO" />
+    </AssociationSet>
+    <AssociationSet Name="FK__USER_LOG__City__662B2B3B" Association="Self.FK__USER_LOG__City__662B2B3B">
+      <End Role="COUNTRY_CITY" EntitySet="COUNTRY_CITY" />
+      <End Role="USER_LOG" EntitySet="USER_LOG" />
+    </AssociationSet>
+    <AssociationSet Name="FK__SUBMISSIO__Authe__69FBBC1F" Association="Self.FK__SUBMISSIO__Authe__69FBBC1F">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="SUBMISSIONS" EntitySet="SUBMISSIONS" />
+    </AssociationSet>
+    <AssociationSet Name="FK__SUBMISSIO__prevS__690797E6" Association="Self.FK__SUBMISSIO__prevS__690797E6">
+      <End Role="SUBMISSIONS" EntitySet="SUBMISSIONS" />
+      <End Role="SUBMISSIONS1" EntitySet="SUBMISSIONS" />
+    </AssociationSet>
+    <AssociationSet Name="FK__USER_INFO__Authe__607251E5" Association="Self.FK__USER_INFO__Authe__607251E5">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="USER_INFO" EntitySet="USER_INFO" />
+    </AssociationSet>
+    <AssociationSet Name="FK__USER_LOG__Authen__65370702" Association="Self.FK__USER_LOG__Authen__65370702">
+      <End Role="USERS" EntitySet="USERS" />
+      <End Role="USER_LOG" EntitySet="USER_LOG" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

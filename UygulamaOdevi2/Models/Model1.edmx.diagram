@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="58aa328677a647daaf159feacafb1ca9" Name="Diagram1">
+        <EntityTypeShape EntityType="KONFERANSModel.CONFERENCE" Width="1.5" PointX="3" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="KONFERANSModel.CONFERENCE_TAGS" Width="1.5" PointX="5.25" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="KONFERANSModel.COUNTRY" Width="1.5" PointX="0.75" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="KONFERANSModel.COUNTRY_CITY" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="KONFERANSModel.SUBMISSIONS" Width="1.5" PointX="5.25" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="KONFERANSModel.USER_INFO" Width="1.5" PointX="6" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="KONFERANSModel.USER_LOG" Width="1.5" PointX="3" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="KONFERANSModel.USERS" Width="1.5" PointX="0.75" PointY="8.25" IsExpanded="true" />
+        <AssociationConnector Association="KONFERANSModel.FK__CONFERENC__ConfI__55F4C372" ManuallyRouted="false" />
+        <AssociationConnector Association="KONFERANSModel.FK__CONFERENC__Creat__531856C7" ManuallyRouted="false" />
+        <AssociationConnector Association="KONFERANSModel.FK__SUBMISSIO__ConfI__6AEFE058" ManuallyRouted="false" />
+        <AssociationConnector Association="KONFERANSModel.FK__COUNTRY_C__Count__5CA1C101" ManuallyRouted="false" />
+        <AssociationConnector Association="KONFERANSModel.FK__USER_INFO__Count__5F7E2DAC" ManuallyRouted="false" />
+        <AssociationConnector Association="KONFERANSModel.FK__USER_LOG__Countr__6442E2C9" ManuallyRouted="false" />
+        <AssociationConnector Association="KONFERANSModel.FK__USER_INFO__City__6166761E" ManuallyRouted="false" />
+        <AssociationConnector Association="KONFERANSModel.FK__USER_LOG__City__662B2B3B" ManuallyRouted="false" />
+        <AssociationConnector Association="KONFERANSModel.FK__SUBMISSIO__Authe__69FBBC1F" ManuallyRouted="false" />
+        <AssociationConnector Association="KONFERANSModel.FK__SUBMISSIO__prevS__690797E6" ManuallyRouted="false" />
+        <AssociationConnector Association="KONFERANSModel.FK__USER_INFO__Authe__607251E5" ManuallyRouted="false" />
+        <AssociationConnector Association="KONFERANSModel.FK__USER_LOG__Authen__65370702" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

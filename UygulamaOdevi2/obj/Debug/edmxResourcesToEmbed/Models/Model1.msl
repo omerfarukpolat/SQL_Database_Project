@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="KONFERANSModelStoreContainer" CdmEntityContainer="KONFERANSEntities">
+    <EntitySetMapping Name="CONFERENCE">
+      <EntityTypeMapping TypeName="KONFERANSModel.CONFERENCE">
+        <MappingFragment StoreEntitySet="CONFERENCE">
+          <ScalarProperty Name="ConfID" ColumnName="ConfID" />
+          <ScalarProperty Name="CreationDateTime" ColumnName="CreationDateTime" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+          <ScalarProperty Name="Year" ColumnName="Year" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+          <ScalarProperty Name="Submission_Deadline" ColumnName="Submission_Deadline" />
+          <ScalarProperty Name="CreatorUser" ColumnName="CreatorUser" />
+          <ScalarProperty Name="WebSite" ColumnName="WebSite" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CONFERENCE_TAGS">
+      <EntityTypeMapping TypeName="KONFERANSModel.CONFERENCE_TAGS">
+        <MappingFragment StoreEntitySet="CONFERENCE_TAGS">
+          <ScalarProperty Name="ConfID" ColumnName="ConfID" />
+          <ScalarProperty Name="Tag" ColumnName="Tag" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="COUNTRY">
+      <EntityTypeMapping TypeName="KONFERANSModel.COUNTRY">
+        <MappingFragment StoreEntitySet="COUNTRY">
+          <ScalarProperty Name="Country_Code" ColumnName="Country_Code" />
+          <ScalarProperty Name="Country_Name" ColumnName="Country_Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="COUNTRY_CITY">
+      <EntityTypeMapping TypeName="KONFERANSModel.COUNTRY_CITY">
+        <MappingFragment StoreEntitySet="COUNTRY_CITY">
+          <ScalarProperty Name="Country_Code" ColumnName="Country_Code" />
+          <ScalarProperty Name="CityID" ColumnName="CityID" />
+          <ScalarProperty Name="City_Name" ColumnName="City_Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SUBMISSIONS">
+      <EntityTypeMapping TypeName="KONFERANSModel.SUBMISSIONS">
+        <MappingFragment StoreEntitySet="SUBMISSIONS">
+          <ScalarProperty Name="AuthenticationID" ColumnName="AuthenticationID" />
+          <ScalarProperty Name="ConfID" ColumnName="ConfID" />
+          <ScalarProperty Name="SubmissionID" ColumnName="SubmissionID" />
+          <ScalarProperty Name="prevSubmissionID" ColumnName="prevSubmissionID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="USER_INFO">
+      <EntityTypeMapping TypeName="KONFERANSModel.USER_INFO">
+        <MappingFragment StoreEntitySet="USER_INFO">
+          <ScalarProperty Name="InfoID" ColumnName="InfoID" />
+          <ScalarProperty Name="Salutation" ColumnName="Salutation" />
+          <ScalarProperty Name="AuthenticationID" ColumnName="AuthenticationID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Affiliation" ColumnName="Affiliation" />
+          <ScalarProperty Name="primary_email" ColumnName="primary_email" />
+          <ScalarProperty Name="secondary_email" ColumnName="secondary_email" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="fax" ColumnName="fax" />
+          <ScalarProperty Name="URL" ColumnName="URL" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="Record_Creation_Date" ColumnName="Record_Creation_Date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="USER_LOG">
+      <EntityTypeMapping TypeName="KONFERANSModel.USER_LOG">
+        <MappingFragment StoreEntitySet="USER_LOG">
+          <ScalarProperty Name="LogID" ColumnName="LogID" />
+          <ScalarProperty Name="Salutation" ColumnName="Salutation" />
+          <ScalarProperty Name="AuthenticationID" ColumnName="AuthenticationID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Affiliation" ColumnName="Affiliation" />
+          <ScalarProperty Name="primary_email" ColumnName="primary_email" />
+          <ScalarProperty Name="secondary_email" ColumnName="secondary_email" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="fax" ColumnName="fax" />
+          <ScalarProperty Name="URL" ColumnName="URL" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="Record_Creation_Date" ColumnName="Record_Creation_Date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="USERS">
+      <EntityTypeMapping TypeName="KONFERANSModel.USERS">
+        <MappingFragment StoreEntitySet="USERS">
+          <ScalarProperty Name="AuthenticationID" ColumnName="AuthenticationID" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
