@@ -16,7 +16,7 @@ namespace UygulamaOdevi2.Models
     {
         public string ConfID { get; set; }
         public string Tag { get; set; }
-    
+        public string ConferenceName { get; set; }
         public virtual CONFERENCE CONFERENCE { get; set; }
     }
 }

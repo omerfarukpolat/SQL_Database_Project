@@ -10,7 +10,7 @@ namespace UygulamaOdevi2.Controllers
     {
         public ActionResult Index()
         {
-            RDBMSController db = new RDBMSController("s");
+            RDBMSController db = new RDBMSController();
             MongoDBController mongo = new MongoDBController("KONFERANS");
         
             return View();

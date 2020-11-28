@@ -27,7 +27,7 @@ namespace UygulamaOdevi2.Models
         public string fax { get; set; }
         public string URL { get; set; }
         public string Address { get; set; }
-        public Nullable<int> City { get; set; }
+        public string City { get; set; }
         public string Country { get; set; }
         public Nullable<System.DateTime> Record_Creation_Date { get; set; }
     

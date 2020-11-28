@@ -29,7 +29,7 @@ namespace UygulamaOdevi2.Models
         public Nullable<System.DateTime> StartDate { get; set; }
         public Nullable<System.DateTime> EndDate { get; set; }
         public Nullable<System.DateTime> Submission_Deadline { get; set; }
-        public Nullable<int> CreatorUser { get; set; }
+        public string CreatorUser { get; set; }
         public string WebSite { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
