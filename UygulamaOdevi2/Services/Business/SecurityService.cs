@@ -13,5 +13,9 @@ namespace UygulamaOdevi2.Services.Business {
         public bool Authenticate(UserModel user) {
             return daoService.FindByUser(user);
         }
+
+        public void CreateNewUser(UserModel user) {
+            daoService.CreateNewUser(user);
+        }
     }
 }

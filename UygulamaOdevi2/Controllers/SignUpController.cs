@@ -6,21 +6,20 @@ using System.Web.Mvc;
 using UygulamaOdevi2.Models;
 using UygulamaOdevi2.Services.Business;
 
-namespace UygulamaOdevi2.Controllers {
-    public class LoginController : Controller {
-        // GET: Login
-        public ActionResult Index() {
-            return View("Login");
-        }
-
-        public ActionResult SignUp() {
+namespace UygulamaOdevi2.Controllers
+{
+    public class SignUpController : Controller
+    {
+        // GET: SignUp
+        public ActionResult Index()
+        {
             return View("SignUp");
         }
 
-        public ActionResult Login(UserModel userModel) {
+        public ActionResult SignUp(UserModel userModel) {
             SecurityService securityService = new SecurityService();
-            Boolean success = securityService.Authenticate(userModel);
-
+            securityService.CreateNewUser(userModel);
+            bool success = true;
             if (success) {
                 return View("LoginSuccess", userModel);
             }
