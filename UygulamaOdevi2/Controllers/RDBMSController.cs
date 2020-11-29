@@ -263,14 +263,17 @@ namespace UygulamaOdevi2.Controllers
                                       string primary_email, string secondary_email, string password, string phone, string fax, string URL,
                                       string address, string city, string country, DateTime recordCreationDate)
         {
-            int cityID;
-            string countryCode;
+            int cityID = 0;
+            string countryCode = "";
             string findcity = "SELECT CityID,Country_Code FROM CITY WHERE City_Name = @city";
             var asd = new SqlCommand(findcity, con);
             asd.Parameters.AddWithValue("@city", city);
             SqlDataReader rdr = asd.ExecuteReader();
-            cityID = rdr.GetInt32(0);
-            countryCode = rdr.GetString(1);
+            while (rdr.Read())
+            {
+                cityID = rdr.GetInt32(0);
+                countryCode = rdr.GetString(1);
+            }
             rdr.Close();
             var cmd = new SqlCommand();
 
@@ -332,14 +335,17 @@ namespace UygulamaOdevi2.Controllers
                                     string primary_email, string secondary_email, string password, string phone, string fax, string URL,
                                     string address, string city, string country, DateTime recordCreationDate)
         {
-            int cityID;
-            string countryCode;
+            int cityID = 0;
+            string countryCode = "";
             string findcity = "SELECT CityID,Country_Code FROM CITY WHERE City_Name = @city";
             var asd = new SqlCommand(findcity, con);
             asd.Parameters.AddWithValue("@city", city);
             SqlDataReader rdr = asd.ExecuteReader();
-            cityID = rdr.GetInt32(0);
-            countryCode = rdr.GetString(1);
+            while (rdr.Read())
+            {
+                cityID = rdr.GetInt32(0);
+                countryCode = rdr.GetString(1);
+            }
             rdr.Close();
             var cmd = new SqlCommand();
 
@@ -396,12 +402,14 @@ namespace UygulamaOdevi2.Controllers
         public void insertConference(string ConfID, DateTime CreationDateTime, string name, string ShortName, int Year,
                                   DateTime StartDate, DateTime EndDate, DateTime Submission_Deadline, string CreatorUser, string WebSite)
         {
-
+            int userID = 0;
             string findUser = "SELECT AuthenticationID FROM USERS WHERE Username = @CreatorUser";
             var asd = new SqlCommand(findUser, con);
             asd.Parameters.AddWithValue("@CreatorUser", CreatorUser);
             SqlDataReader rdr = asd.ExecuteReader();
-            int userID = rdr.GetInt32(0);
+            while (rdr.Read()){
+               userID = rdr.GetInt32(0);
+            }
             rdr.Close();
             var cmd = new SqlCommand();
             string s = "INSERT INTO CONFERENCE " +
@@ -424,12 +432,15 @@ namespace UygulamaOdevi2.Controllers
         public void updateConference(string ConfID, DateTime CreationDateTime, string name, string ShortName, int Year,
                             DateTime StartDate, DateTime EndDate, DateTime Submission_Deadline, string CreatorUser, string WebSite)
         {
-
+            int userID = 0;
             string findUser = "SELECT AuthenticationID FROM USERS WHERE Username = @CreatorUser";
             var asd = new SqlCommand(findUser, con);
             asd.Parameters.AddWithValue("@CreatorUser", CreatorUser);
             SqlDataReader rdr = asd.ExecuteReader();
-            int userID = rdr.GetInt32(0);
+            while (rdr.Read())
+            {
+                userID = rdr.GetInt32(0);
+            }
             rdr.Close();
             string s = "UPDATE CONFERENCE SET CreationDateTime = @CreationDateTime," +
                 "Name = @name,ShortName = @ShortName,Year = @Year,StartDate = @StartDate, EndDate = @EndDate," +
@@ -479,11 +490,15 @@ namespace UygulamaOdevi2.Controllers
         }
         public void updateConferenceTags(string ConferenceName, string Tag)
         {
+            string confID = "";
             string findConfID = "SELECT ConfID FROM CONFERENCE WHERE Name = @ConferenceName";
             var asd = new SqlCommand(findConfID, con);
             asd.Parameters.AddWithValue("@ConferenceName", ConferenceName);
             SqlDataReader rdr = asd.ExecuteReader();
-            string confID = rdr.GetString(0);
+            while (rdr.Read())
+            {
+                confID = rdr.GetString(0);
+            }
             rdr.Close();
             string s = "UPDATE CONFERENCE_TAGS SET Tag = @Tag" +
                 " WHERE ConfID= @ConfID";
@@ -496,12 +511,16 @@ namespace UygulamaOdevi2.Controllers
         }
         public void insertConferenceTags(string conferenceName, string Tag)
         {
-            string confID;
+            string confID = "";
             string findConference = "SELECT ConfID FROM CONFERENCE WHERE Name = @conferenceName";
             var asd = new SqlCommand(findConference, con);
             asd.Parameters.AddWithValue("@conferenceName", conferenceName);
             SqlDataReader rdr = asd.ExecuteReader();
-            confID = rdr.GetString(0);
+            while (rdr.Read())
+            {
+                confID = rdr.GetString(0);
+            
+            }
             rdr.Close();
             string s = "INSERT INTO CONFERENCE_TAGS(ConfID, Tag) " +
                         "VALUES (@confID,@Tag)";
@@ -514,12 +533,15 @@ namespace UygulamaOdevi2.Controllers
         }
         public void deleteConferenceTags(string conferenceName)
         {
-            string confID;
+            string confID = "";
             string findConference = "SELECT ConfID FROM CONFERENCE WHERE Name = @conferenceName";
             var asd = new SqlCommand(findConference, con);
             asd.Parameters.AddWithValue("@conferenceName", conferenceName);
             SqlDataReader rdr = asd.ExecuteReader();
-            confID = rdr.GetString(0);
+            while (rdr.Read())
+            {
+                confID = rdr.GetString(0);
+            }
             string s = "DELETE FROM CONFERENCE_TAGS WHERE ConfID =@confID";
             var cmd = new SqlCommand();
             cmd.Connection = con;
@@ -544,12 +566,15 @@ namespace UygulamaOdevi2.Controllers
         }
         public void insertConferenceRoles(int ConfID_ROLE, string username)
         {
-            int userID;
+            int userID = 0;
             string findConference = "SELECT AuthenticationID FROM USERS WHERE Username = @username";
             var asd = new SqlCommand(findConference, con);
             asd.Parameters.AddWithValue("@username", username);
             SqlDataReader rdr = asd.ExecuteReader();
-            userID = rdr.GetInt32(0);
+            while(rdr.Read())
+            {
+                userID = rdr.GetInt32(0);
+            }
             rdr.Close();
             string s = "INSERT INTO CONFERENCE_ROLES(ConfID_ROLE, AuthenticationID) " +
                         "VALUES (@ConfID_ROLE,@userID)";
@@ -562,12 +587,16 @@ namespace UygulamaOdevi2.Controllers
         }
         public void updateConferenceRoles(int ConfID_ROLE, string username)
         {
-            int userID;
+            int userID = 0;
             string findConference = "SELECT AuthenticationID FROM USERS WHERE Username = @username";
             var asd = new SqlCommand(findConference, con);
             asd.Parameters.AddWithValue("@username", username);
             SqlDataReader rdr = asd.ExecuteReader();
-            userID = rdr.GetInt32(0);
+            while (rdr.Read())
+            {
+
+                userID = rdr.GetInt32(0);
+            }
             rdr.Close();
             string s = "UPDATE CONFERENCE_ROLES SET ConfID_ROLE = @ConfID_ROLE " +
                         "WHERE AuthenticationID = @userID";
