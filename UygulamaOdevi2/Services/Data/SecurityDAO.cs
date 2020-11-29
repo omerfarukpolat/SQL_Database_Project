@@ -14,7 +14,7 @@ namespace UygulamaOdevi2.Services.Data {
         internal bool FindByUser(UserModel user) {
             //start by assuming that nothing is found in this query
             bool success = false;
-            
+
             for (int i = 0; i < rdbms.getUsers().Count; i++) {
                 String name1 = user.Username;
                 String pass1 = user.Password;
@@ -27,7 +27,24 @@ namespace UygulamaOdevi2.Services.Data {
         }
 
         internal void CreateNewUser(UserModel user) {
-            //rdbms.insertUserInfo();
+            string salutation = user.Salutation;
+            int id = user.AuthenticationID;
+            string name = user.Name;
+            string lname = user.LastName;
+            int affiliation = user.Affiliation;
+            string pemail = user.PrimaryEmail;
+            string semail = user.SecondaryEmail;
+            string pass = user.Password;
+            string phone = user.Phone;
+            string fax = user.Fax;
+            string url = user.URL;
+            string address = user.Address;
+            string city = user.City;
+            string country = user.Country;
+            DateTime date = user.RecordCreationDate;
+            string username = user.Username;
+            rdbms.insertUser(username, pass);
+            rdbms.insertUserInfo(salutation, id, name, lname, affiliation, pemail, semail, pass, phone, fax, url, address, city, country, date);
         }
     }
 }

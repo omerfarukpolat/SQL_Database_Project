@@ -1,0 +1,146 @@
+﻿@model UygulamaOdevi2.Models.UserModel
+
+@{
+    ViewBag.Title = "HomePage";
+}
+
+<h2>HomePage</h2>
+
+<div>
+    <h4>UserModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Username)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Username)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Password)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Password)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Salutation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Salutation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AuthenticationID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AuthenticationID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Affiliation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Affiliation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PrimaryEmail)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PrimaryEmail)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SecondaryEmail)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SecondaryEmail)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Phone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Phone)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fax)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fax)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.URL)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.URL)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.City)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.City)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Country)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Country)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RecordCreationDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RecordCreationDate)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
