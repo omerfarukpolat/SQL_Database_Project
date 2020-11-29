@@ -19,9 +19,9 @@ namespace UygulamaOdevi2.Models {
         public string Fax { get; set; }
         public string URL { get; set; }
         public string Address { get; set; }
-        public int City { get; set; }
+        public string City { get; set; }
         public string Country { get; set; }
-        public string RecordCreationDate { get; set; }
+        public DateTime RecordCreationDate { get; set; }
 
     }
 }
