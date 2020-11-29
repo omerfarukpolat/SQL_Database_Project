@@ -265,7 +265,7 @@ namespace UygulamaOdevi2.Controllers
         {
             int cityID = 0;
             string countryCode = "";
-            string findcity = "SELECT CityID,Country_Code FROM CITY WHERE City_Name = @city";
+            string findcity = "SELECT CityID,Country_Code FROM COUNTRY_CITY WHERE City_Name = @city";
             var asd = new SqlCommand(findcity, con);
             asd.Parameters.AddWithValue("@city", city);
             SqlDataReader rdr = asd.ExecuteReader();
@@ -280,7 +280,7 @@ namespace UygulamaOdevi2.Controllers
             string s = "INSERT INTO USER_INFO " +
                         "VALUES (@salutation,@AuthenticationID,@name,@lname,@affiliation,@primary_email,@secondary_email," +
                         "@password,@phone,@fax,@URL,@address," +
-                        "@cityID,@countryCode)";
+                        "@cityID,@countryCode,@recordCreationDate)";
             cmd.Connection = con;
             cmd.Parameters.AddWithValue("@salutation", salutation);
             cmd.Parameters.AddWithValue("@AuthenticationID", AuthenticationID);
@@ -337,7 +337,7 @@ namespace UygulamaOdevi2.Controllers
         {
             int cityID = 0;
             string countryCode = "";
-            string findcity = "SELECT CityID,Country_Code FROM CITY WHERE City_Name = @city";
+            string findcity = "SELECT CityID,Country_Code FROM COUNTRY_CITY WHERE City_Name = @city";
             var asd = new SqlCommand(findcity, con);
             asd.Parameters.AddWithValue("@city", city);
             SqlDataReader rdr = asd.ExecuteReader();
@@ -352,7 +352,7 @@ namespace UygulamaOdevi2.Controllers
             string s = "INSERT INTO USER_LOG " +
                         "VALUES (@salutation,@AuthenticationID,@name,@lname,@affiliation,@primary_email,@secondary_email," +
                         "@password,@phone,@fax,@URL,@address," +
-                        "@cityID,@countryCode)";
+                        "@cityID,@countryCode,@recordCreationDate)";
             cmd.Connection = con;
             cmd.Parameters.AddWithValue("@salutation", salutation);
             cmd.Parameters.AddWithValue("@AuthenticationID", AuthenticationID);
