@@ -25,7 +25,7 @@ namespace UygulamaOdevi2.Services.Data {
 
             return success;
         }
-
+        //idyi profilde goster
         internal void CreateNewUser(UserModel user) {
             string salutation = user.Salutation;
             int id = user.AuthenticationID;
@@ -41,10 +41,21 @@ namespace UygulamaOdevi2.Services.Data {
             string address = user.Address;
             string city = user.City;
             string country = user.Country;
-            DateTime date = user.RecordCreationDate;
+            //DateTime date = user.RecordCreationDate;
+            DateTime date = DateTime.Today;
             string username = user.Username;
             rdbms.insertUser(username, pass);
-            rdbms.insertUserInfo(salutation, id, name, lname, affiliation, pemail, semail, pass, phone, fax, url, address, city, country, date);
+
+            List<USERS> list = new List<USERS>();
+            int id2 = 1;
+            for (int i = 0; i < list.Count; i++) {
+                if (String.Equals(username, list[i].Username)) {
+                    id2 = list[i].AuthenticationID;
+                    break;
+                }
+            }
+
+            rdbms.insertUserInfo(salutation, id2, name, lname, affiliation, pemail, semail, pass, phone, fax, url, address, city, country, date);
         }
     }
 }

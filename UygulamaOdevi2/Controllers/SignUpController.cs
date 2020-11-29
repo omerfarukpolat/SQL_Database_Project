@@ -15,7 +15,7 @@ namespace UygulamaOdevi2.Controllers {
 
         public ActionResult SignUp(UserModel userModel) {
             SecurityService securityService = new SecurityService();
-            //securityService.CreateNewUser(userModel);
+            securityService.CreateNewUser(userModel);
             return View("HomePage", userModel);
         }
     }
