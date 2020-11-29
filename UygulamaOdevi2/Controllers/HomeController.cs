@@ -11,7 +11,6 @@ namespace UygulamaOdevi2.Controllers
         public ActionResult Index()
         {
             RDBMSController db = new RDBMSController("s");
-            MongoDBController mongo = new MongoDBController("KONFERANS");
         
             return View();
         }
