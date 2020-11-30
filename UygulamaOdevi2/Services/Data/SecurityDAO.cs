@@ -46,7 +46,7 @@ namespace UygulamaOdevi2.Services.Data {
             string username = user.Username;
             rdbms.insertUser(username, pass);
 
-            List<USERS> list = new List<USERS>();
+            List<USERS> list = rdbms.getUsers();
             int id2 = 1;
             for (int i = 0; i < list.Count; i++) {
                 if (String.Equals(username, list[i].Username)) {
