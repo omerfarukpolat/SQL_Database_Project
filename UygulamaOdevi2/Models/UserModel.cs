@@ -6,6 +6,8 @@ using System.Web;
 namespace UygulamaOdevi2.Models {
     public class UserModel {
 
+        public static UserModel LoggedInUser { get; set; } = null;
+
         public string Username { get; set; }
         public string Password { get; set; }
         public string Salutation { get; set; }

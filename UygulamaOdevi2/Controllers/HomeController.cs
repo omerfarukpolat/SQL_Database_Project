@@ -1,33 +1,32 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using UygulamaOdevi2.Models;
 using UygulamaOdevi2.Services.Business;
 using UygulamaOdevi2.Services.Data;
 
-namespace UygulamaOdevi2.Controllers
-{
-    public class HomeController : Controller
-    {
+namespace UygulamaOdevi2.Controllers {
+    public class HomeController : Controller {
+
         public ActionResult Index() {
-            RDBMSController db = new RDBMSController("s");
+            new RDBMSController("s");
             return View("Index");
         }
 
         public ActionResult UserRequests() {
-            return View("UserRequests", SecurityDAO.user_request);
+            UserModel user = UserModel.LoggedInUser;
+            if (user == null) //if user is not logged in
+                return View("NotLoggedIn");
+            else {
+                if (String.Equals(user.Username, "Admin")) //if user is logged in and is an admin
+                    return View("UserRequests", SecurityDAO.user_request);
+                else //if user is logged in but is not an admin
+                    return View("NotAnAdmin");
+            }
         }
 
-        public ActionResult About() {
-            ViewBag.Message = "Your application description page.";
-            return View("About");
-        }
-
-        public ActionResult Contact() {
-            ViewBag.Message = "Your contact page.";
-            return View("Contact");
+        public ActionResult LogOut() {
+            UserModel.LoggedInUser = null;
+            return View("Index");
         }
 
         public ActionResult SignUp() {
