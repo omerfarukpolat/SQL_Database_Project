@@ -284,14 +284,15 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Login\Login.cshtml" />
-    <Content Include="Views\Login\LoginSuccess.cshtml" />
-    <Content Include="Views\Login\LoginFailure.cshtml" />
-    <Content Include="Views\Login\SignUp.cshtml" />
-    <Content Include="Views\Shared\HomePage.cshtml" />
+    <Content Include="Views\Shared\Login.cshtml" />
+    <Content Include="Views\Shared\LoginFailure.cshtml" />
+    <Content Include="Views\Shared\LoginSuccess.cshtml" />
+    <Content Include="Views\Shared\SignUp.cshtml" />
+    <Content Include="Views\Shared\UserRequestSent.cshtml" />
+    <Content Include="Views\Shared\UserRequests.cshtml" />
+    <Content Include="Views\Shared\NotAnAdmin.cshtml" />
+    <Content Include="Views\Shared\NotLoggedIn.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -8,7 +8,7 @@ using UygulamaOdevi2.Services.Business;
 
 namespace UygulamaOdevi2.Controllers {
     public class LoginController : Controller {
-        // GET: Login
+
         public ActionResult Index() {
             return View("Login");
         }
@@ -22,11 +22,11 @@ namespace UygulamaOdevi2.Controllers {
             Boolean success = securityService.Authenticate(userModel);
 
             if (success) {
+                UserModel.LoggedInUser = userModel;
                 return View("LoginSuccess", userModel);
             }
-            else {
+            else 
                 return View("LoginFailure", userModel);
-            }
         }
     }
 }
