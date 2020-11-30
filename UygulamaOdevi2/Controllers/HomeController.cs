@@ -1,26 +1,28 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Web.Mvc;
 using UygulamaOdevi2.Models;
 using UygulamaOdevi2.Services.Business;
 using UygulamaOdevi2.Services.Data;
 
-<<<<<<< HEAD
-namespace UygulamaOdevi2.Controllers
-{
-    public class HomeController : Controller
-    {
-        public ActionResult Index()
-        {
-            RDBMSController db = new RDBMSController("s");
-            MongoDBController mongoDB = new MongoDBController("s");
-        
-            return View();
-=======
 namespace UygulamaOdevi2.Controllers {
     public class HomeController : Controller {
-
         public ActionResult Index() {
-            new RDBMSController("s");
+            RDBMSController db = new RDBMSController("s");
+            MongoDBController mongoDB = new MongoDBController("s");
+
+            //search users table for an admin, if there is none, create an admin user
+            List<USERS> list = db.getUsers();
+            bool admin_exists = false;
+            for (int i = 0; i < list.Count; i++) {
+                if (String.Equals(list[i].Username, "Admin")) {
+                    admin_exists = true;
+                    break;
+                }
+            }
+            if (!admin_exists)
+                db.insertUser("Admin", "123");
+
             return View("Index");
         }
 
@@ -39,7 +41,6 @@ namespace UygulamaOdevi2.Controllers {
         public ActionResult LogOut() {
             UserModel.LoggedInUser = null;
             return View("Index");
->>>>>>> 0dbfdef5c4f731a10c501f0ce67c43d06305b445
         }
 
         public ActionResult SignUp() {
