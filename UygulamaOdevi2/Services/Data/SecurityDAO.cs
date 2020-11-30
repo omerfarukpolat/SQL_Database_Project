@@ -49,11 +49,8 @@ namespace UygulamaOdevi2.Services.Data {
             rdbms.insertUser(username, pass);
 
             List<USERS> list = rdbms.getUsers();
-<<<<<<< HEAD
-            int id2 = 1;
-=======
+
             int id2 = -1;
->>>>>>> 0dbfdef5c4f731a10c501f0ce67c43d06305b445
             for (int i = 0; i < list.Count; i++) {
                 if (String.Equals(username, list[i].Username)) {
                     id2 = list[i].AuthenticationID;
