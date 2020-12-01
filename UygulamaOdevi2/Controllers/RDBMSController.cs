@@ -516,7 +516,6 @@ namespace UygulamaOdevi2.Controllers {
             SqlDataReader rdr = asd.ExecuteReader();
             while (rdr.Read()) {
                 confID = rdr.GetString(0);
-
             }
             rdr.Close();
             string s = "INSERT INTO CONFERENCE_TAGS(ConfID, Tag) " +
@@ -700,6 +699,24 @@ namespace UygulamaOdevi2.Controllers {
             cmd.Parameters.AddWithValue("@prevSubmissionID", prevSubmissionID);
             cmd.CommandText = s;
             cmd.ExecuteNonQuery();
+        }
+        public List<SEARCH_TAGS> searchWithTag(string tag)
+        {
+            List<SEARCH_TAGS> list = new List<SEARCH_TAGS>();
+            string findConference = "SELECT ConfID,Name,Tag FROM CONFERENCE,CONFERENCE_TAGS" +
+                " WHERE CONFERENCE_TAGS.Tag LIKE " + "'%" + tag + "%' AND CONFERENCE.ConfID = CONFERENCE_TAGS.ConfID" ;
+            var asd = new SqlCommand(findConference, con);
+            SqlDataReader rdr = asd.ExecuteReader();
+            while (rdr.Read())
+            {
+                SEARCH_TAGS item = new SEARCH_TAGS();
+                item.confID = rdr.GetString(0);
+                item.confName = rdr.GetString(1);
+                item.tags = rdr.GetString(2);
+                list.Add(item);
+            }
+            rdr.Close();
+            return list;
         }
     }
 }
