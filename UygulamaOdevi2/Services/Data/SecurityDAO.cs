@@ -25,9 +25,7 @@ namespace UygulamaOdevi2.Services.Data {
             DateTime deadLine = Convert.ToDateTime(conf.Submission_Deadline);
             string website = conf.Website;
 
-            int creatorUser1 = UserModel.LoggedInUser.AuthenticationID;
-            conf.CreatorUser = creatorUser1;
-            string creatorUser = creatorUser1 + "";
+            string creatorUser = UserModel.LoggedInUser.Username;
             
             if (String.Equals(UserModel.LoggedInUser.Username, "Admin")) {
                 rdbms.insertConference(id, creationDate, name, shortName, year, startDate, endDate, deadLine, creatorUser, website);
