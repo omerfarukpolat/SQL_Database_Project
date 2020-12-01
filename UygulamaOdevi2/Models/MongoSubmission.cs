@@ -28,16 +28,16 @@ namespace UygulamaOdevi2.Models
         public string ozet { get; set; }
 
         [BsonElement("keywords")]
-        public List<string> keywords { get; set; }
+        public string keywords { get; set; }
 
         [BsonElement("authors")]
-        public List<List<string>>  authors { get; set; }
+        public string authors { get; set; }
 
         [BsonElement("submitted_by")]
-        public Nullable<int> submittedBy { get; set; }
+        public string submittedBy { get; set; }
 
         [BsonElement("corresponding_author")]
-        public Nullable<int> correspondingAuthor { get; set; }
+        public string correspondingAuthor { get; set; }
 
         [BsonElement("pdf_path")]
         public string pdf_path { get; set; }
@@ -46,7 +46,7 @@ namespace UygulamaOdevi2.Models
         public string type { get; set; }
 
         [BsonElement("submission_date_time")]
-        public DateTime submissionDateTime { get; set; }
+        public string submissionDateTime { get; set; }
 
         [BsonElement("status")]
         public Nullable<int> status { get; set; }

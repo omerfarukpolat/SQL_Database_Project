@@ -124,16 +124,23 @@ namespace UygulamaOdevi2.Controllers
             {
 
                 MongoSubmission ms = new MongoSubmission();
-                ms.keywords = BsonSerializer.Deserialize<List<string>>(doc.GetElement(6).ToBsonDocument());
-                Debug.WriteLine(ms.keywords);
-                for (int i = 0; i < doc.ElementCount; i++)
-                {
+                ms._id = doc.GetElement(0).Value;
+                ms._id = doc.GetElement(1).Value;
+                ms._id = doc.GetElement(2).Value;
+                ms._id = doc.GetElement(3).Value;
+                ms._id = doc.GetElement(4).Value;
+                ms._id = doc.GetElement(5).Value;
+                ms._id = doc.GetElement(6).Value;
+                ms._id = doc.GetElement(7).Value;
+                ms._id = doc.GetElement(8).Value;
+                ms._id = doc.GetElement(9).Value;
+                ms._id = doc.GetElement(10).Value;
+                ms._id = doc.GetElement(0).Value;
+                ms._id = doc.GetElement(0).Value;
+                ms._id = doc.GetElement(0).Value;
 
-                    //         ms.prevSubmissionID = doc.GetValue(i);
 
-                    Debug.WriteLine(doc.GetElement(i).Name + "    " + doc.GetElement(i).Value);
-                    Debug.WriteLine("\n");
-                }
+
             }
             return list;
         }
