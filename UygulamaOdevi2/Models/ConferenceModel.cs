@@ -14,7 +14,7 @@ namespace UygulamaOdevi2.Models {
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public DateTime Submission_Deadline { get; set; }
-        public int CreatorUser { get; set; }
+        public string CreatorUser { get; set; }
         public string Website { get; set; }
 
     }
