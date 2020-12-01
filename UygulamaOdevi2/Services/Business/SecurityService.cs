@@ -21,5 +21,13 @@ namespace UygulamaOdevi2.Services.Business {
         public void addUser(UserModel user) {
             daoService.addUser(user);
         }
+
+        public void addConference(ConferenceModel conf) {
+            daoService.addConference(conf);
+        }
+
+        public bool CreateConference(ConferenceModel conf) {
+            return daoService.CreateConference(conf);
+        }
     }
 }

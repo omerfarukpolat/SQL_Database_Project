@@ -73,7 +73,7 @@ namespace UygulamaOdevi2.Controllers {
                                  ConfID_ROLE INTEGER,
                                  AuthenticationID INTEGER,
                                  FOREIGN KEY(AuthenticationID) REFERENCES USERS(AuthenticationID) ON DELETE CASCADE,
-                                 FOREIGN KEY(ConfID) REFERENCES CONFFERENCE(ConfID) ON DELETE CASCADE
+                                 FOREIGN KEY(ConfID) REFERENCES CONFERENCE(ConfID) ON DELETE CASCADE
                          )";
             cmd.ExecuteNonQuery();
 
@@ -420,7 +420,7 @@ namespace UygulamaOdevi2.Controllers {
             var cmd = new SqlCommand();
             string s = "INSERT INTO CONFERENCE " +
                         "VALUES (@ConfID,@CreationDateTime,@name,@ShortName,@Year,@StartDate,@EndDate," +
-                        "@Submission_Deadline,@userID,@WebSite";
+                        "@Submission_Deadline,@userID,@WebSite)";
             cmd.Connection = con;
             cmd.Parameters.AddWithValue("@ConfID", ConfID);
             cmd.Parameters.AddWithValue("@CreationDateTime", CreationDateTime);

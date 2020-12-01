@@ -8,7 +8,7 @@ using UygulamaOdevi2.Services.Data;
 namespace UygulamaOdevi2.Controllers {
     public class HomeController : Controller {
         public ActionResult Index() {
-            RDBMSController db = new RDBMSController();
+            RDBMSController db = new RDBMSController("s");
           //  MongoDBController mongoDB = new MongoDBController("s");
 
             //search users table for an admin, if there is none, create an admin user
@@ -73,5 +73,55 @@ namespace UygulamaOdevi2.Controllers {
             return View("UserRequests", SecurityDAO.user_request);
         }
 
+        public ActionResult ConferenceRequests() {
+            UserModel user = UserModel.LoggedInUser;
+            if (user == null) //if user is not logged in
+                return View("NotLoggedIn");
+            else {
+                if (String.Equals(user.Username, "Admin")) //if user is logged in and is an admin
+                    return View("ConferenceRequests", SecurityDAO.conference_request);
+                else //if user is logged in but is not an admin
+                    return View("NotAnAdmin");
+            }
+        }
+
+        public ActionResult CreateConference() {
+            if (UserModel.LoggedInUser == null) //if user is not logged in
+                return View("NotLoggedIn");
+            else {
+                return View("CreateConference");
+            }
+        }
+
+        public ActionResult AcceptConference(string confID) {
+            ConferenceModel conf = null;
+            for (int i = 0; i < SecurityDAO.conference_request.Count; i++) {
+                if (String.Equals(SecurityDAO.conference_request[i].ConfID, confID)) {
+                    conf = SecurityDAO.conference_request[i];
+                    SecurityDAO.conference_request.RemoveAt(i);
+                    break;
+                }
+            }
+            SecurityService ss = new SecurityService();
+            ss.addConference(conf);
+
+            return View("ConferenceRequests", SecurityDAO.conference_request);
+        }
+
+        public ActionResult RejectConference(string confID) {
+            for (int i = 0; i < SecurityDAO.conference_request.Count; i++) {
+                if (String.Equals(SecurityDAO.conference_request[i].ConfID, confID)) {
+                    SecurityDAO.conference_request.RemoveAt(i);
+                    break;
+                }
+            }
+            return View("ConferenceRequests", SecurityDAO.conference_request);
+        }
+
+        public ActionResult MyConferences() {
+            return View("MyConferences");
+        }
+
     }
+
 }

@@ -177,6 +177,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CreateConferenceController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MongoDBController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -185,6 +186,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ConferenceModel.cs" />
     <Compile Include="Models\CONFERENCE_ROLES.cs" />
     <Compile Include="Models\CONFERENCE.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -293,6 +295,9 @@
     <Content Include="Views\Shared\UserRequests.cshtml" />
     <Content Include="Views\Shared\NotAnAdmin.cshtml" />
     <Content Include="Views\Shared\NotLoggedIn.cshtml" />
+    <Content Include="Views\Shared\CreateConference.cshtml" />
+    <Content Include="Views\Shared\ConferenceRequestSent.cshtml" />
+    <Content Include="Views\Shared\ConferenceRequests.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

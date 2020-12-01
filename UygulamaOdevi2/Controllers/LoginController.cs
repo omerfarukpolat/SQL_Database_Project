@@ -22,6 +22,14 @@ namespace UygulamaOdevi2.Controllers {
             Boolean success = securityService.Authenticate(userModel);
 
             if (success) {
+                RDBMSController rdbms = new RDBMSController("s");
+                List<USERS> list = rdbms.getUsers();
+                for (int i = 0; i < list.Count; i++) {
+                    if (String.Equals(userModel.Username, list[i].Username)) {
+                        userModel.AuthenticationID = list[i].AuthenticationID;
+                        break;
+                    }
+                }
                 UserModel.LoggedInUser = userModel;
                 return View("LoginSuccess", userModel);
             }

@@ -31,6 +31,12 @@ namespace UygulamaOdevi2
                 defaults: new { controller = "SignUp", action = "Index", id = UrlParameter.Optional }
             );
 
+            routes.MapRoute(
+                name: "CreateConference",
+                url: "{CreateConference}",
+                defaults: new { controller = "CreateConference", action = "Index", id = UrlParameter.Optional }
+            );
+
         }
     }
 }

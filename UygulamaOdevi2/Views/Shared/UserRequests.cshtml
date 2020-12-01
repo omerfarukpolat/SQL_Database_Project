@@ -111,7 +111,7 @@
             @Html.DisplayFor(modelItem => item.RecordCreationDate)
         </td>
         <td>
-            @Html.ActionLink("Accept", "AcceptUser", new {  username = item.Username }) |
+            @Html.ActionLink("Accept", "AcceptUser", new { username = item.Username }) |
             @Html.ActionLink("Reject", "RejectUser", new { username = item.Username })
         </td>
     </tr>

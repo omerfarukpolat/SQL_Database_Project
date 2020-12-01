@@ -10,22 +10,49 @@ namespace UygulamaOdevi2.Services.Data {
         RDBMSController rdbms = new RDBMSController("s");
 
         public static List<UserModel> user_request = new List<UserModel>();
-        public static List<CONFERENCE> conference_request = new List<CONFERENCE>();
+        public static List<ConferenceModel> conference_request = new List<ConferenceModel>();
 
-        internal bool FindByUser(UserModel user) {
-            //start by assuming that nothing is found in this query
-            bool success = false;
+        public bool CreateConference(ConferenceModel conf) {
+            DateTime creationDate = DateTime.Today;
+            conf.CreationDateTime = creationDate;
+            string name = conf.Name;
+            string shortName = conf.ShortName;
+            int year = conf.Year;
+            string id = "_" + shortName + "_" + year;
+            conf.ConfID = id;
+            DateTime startDate = Convert.ToDateTime(conf.StartDate);
+            DateTime endDate = Convert.ToDateTime(conf.EndDate);
+            DateTime deadLine = Convert.ToDateTime(conf.Submission_Deadline);
+            string website = conf.Website;
 
-            for (int i = 0; i < rdbms.getUsers().Count; i++) {
-                String name1 = user.Username;
-                String pass1 = user.Password;
-                String name2 = rdbms.getUsers()[i].Username;
-                String pass2 = rdbms.getUsers()[i].Password;
-                success = String.Equals(name1, name2) && String.Equals(pass1, pass2);
-                if (success) break;
+            int creatorUser1 = UserModel.LoggedInUser.AuthenticationID;
+            conf.CreatorUser = creatorUser1;
+            string creatorUser = creatorUser1 + "";
+            
+            if (String.Equals(UserModel.LoggedInUser.Username, "Admin")) {
+                rdbms.insertConference(id, creationDate, name, shortName, year, startDate, endDate, deadLine, creatorUser, website);
+                return true;
+            }
+            else {
+                conference_request.Add(conf);
+                return false;
             }
 
-            return success;
+        }
+
+        internal void addConference(ConferenceModel conf) {
+            string id = conf.ConfID;
+            DateTime creationDate = conf.CreationDateTime;
+            string name = conf.Name;
+            string shortName = conf.ShortName;
+            int year = conf.Year;
+            DateTime startDate = conf.StartDate;
+            DateTime endDate = conf.EndDate;
+            DateTime deadLine = conf.Submission_Deadline;
+            string creatorUser = conf.CreatorUser + "";
+            string website = conf.Website;
+
+            rdbms.insertConference(id, creationDate, name, shortName, year, startDate, endDate, deadLine, creatorUser, website);
         }
 
         internal void addUser(UserModel user) {
@@ -61,6 +88,22 @@ namespace UygulamaOdevi2.Services.Data {
             rdbms.insertUserInfo(salutation, id2, name, lname, affiliation, pemail, semail, pass, phone, fax, url, address, city, country, date);
         }
 
+        internal bool FindByUser(UserModel user) {
+            //start by assuming that nothing is found in this query
+            bool success = false;
+
+            for (int i = 0; i < rdbms.getUsers().Count; i++) {
+                String name1 = user.Username;
+                String pass1 = user.Password;
+                String name2 = rdbms.getUsers()[i].Username;
+                String pass2 = rdbms.getUsers()[i].Password;
+                success = String.Equals(name1, name2) && String.Equals(pass1, pass2);
+                if (success) break;
+            }
+
+            return success;
+        }
+
         internal bool CreateNewUser(UserModel user) {
             string salutation = user.Salutation;
             string name = user.Name;
@@ -94,6 +137,7 @@ namespace UygulamaOdevi2.Services.Data {
                 return true;
             }
             else {
+                user.AuthenticationID = list[list.Count - 1].AuthenticationID + 1;
                 user_request.Add(user);
                 return false;
             }
