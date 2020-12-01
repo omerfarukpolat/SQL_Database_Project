@@ -87,15 +87,30 @@ namespace UygulamaOdevi2.Controllers
                     { "active", active },
                 };
             submissions.InsertOne(document);
+            RDBMSController rdbms = new RDBMSController("s");
+            List<SUBMISSIONS> list = rdbms.getSubmissions();
+            List<USERS> users = rdbms.getUsers();
+            int userID = 0;
+            foreach(USERS u in users)
+            {
+                if (u.Username.Equals(submittedBy))
+                {
+                    userID = u.AuthenticationID;
+                    break;
+                }
+            }
+            //userID = 0 ise admin tarafından insert edilmiştir.
+            rdbms.insertSubmission(userID, submissionID, list[list.Count - 1].SubmissionID);
         }
 
 
-        public void deleteSubmission(string submissionID)
+        public void deleteSubmission(string submissionID,string submittedBy)
         {
-
-            var deleteFilter = Builders<BsonDocument>.Filter.Eq("submission_id", submissionID);
-
+            //submittedBy = login olan kullanıcının kendi username'i. Sadece kendi eklediği submissionları silebilir.
+            // veya eğer log in olan kullanıcı adminse istediği submissionları silebilir. 
             var submissions = db.GetCollection<BsonDocument>("submissions");
+            var deleteFilter = Builders<BsonDocument>.Filter.Eq("submission_id",submissionID);
+            deleteFilter = deleteFilter & (Builders<BsonDocument>.Filter.Eq("submitted_by", submittedBy));
             submissions.DeleteOne(deleteFilter);
         }
 
@@ -105,29 +120,21 @@ namespace UygulamaOdevi2.Controllers
             var submissions = db.GetCollection<BsonDocument>("submissions");
 
             var documents = submissions.Find(new BsonDocument()).ToList();
-
-            BsonClassMap.RegisterClassMap<MongoSubmission>(cm =>
+            foreach (BsonDocument doc in documents)
             {
-                cm.AutoMap();
-                Debug.WriteLine(cm);
-         
-            });
-           // foreach (BsonDocument doc in documents)
-           // {
 
-           //     MongoSubmission ms = new MongoSubmission();
-           //     ms._id = doc.GetElement(0).Value;
-           //     ms.keywords = BsonSerializer.Deserialize<List<string>>(doc.GetElement(6).ToBsonDocument());
-           //     Debug.WriteLine(ms.keywords);
-           ////     for (int i = 0; i < doc.ElementCount; i++)
-           ////     {
+                MongoSubmission ms = new MongoSubmission();
+                ms.keywords = BsonSerializer.Deserialize<List<string>>(doc.GetElement(6).ToBsonDocument());
+                Debug.WriteLine(ms.keywords);
+                for (int i = 0; i < doc.ElementCount; i++)
+                {
 
-           //////         ms.prevSubmissionID = doc.GetValue(i);
-                    
-           ////         Debug.WriteLine(doc.GetElement(i).Name + "    " + doc.GetElement(i).Value);
-           ////         Debug.WriteLine("\n");
-           ////     }
-           // }
+                    //         ms.prevSubmissionID = doc.GetValue(i);
+
+                    Debug.WriteLine(doc.GetElement(i).Name + "    " + doc.GetElement(i).Value);
+                    Debug.WriteLine("\n");
+                }
+            }
             return list;
         }
         public void updateSubmissions(string prevSubmissionID, string submissionID, string title, string ozet, string[] keywords,

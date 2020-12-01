@@ -203,7 +203,7 @@ namespace UygulamaOdevi2.Controllers {
 
 
             cmd.CommandText = @"CREATE TABLE SUBMISSIONS(
-                             AuthenticationID INTEGER,
+                            AuthenticationID INTEGER,
                             ConfID VARCHAR(20),
                             SubmissionID INT identity(1,1) PRIMARY KEY,
                             prevSubmissionID INT,
