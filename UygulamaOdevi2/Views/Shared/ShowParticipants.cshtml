@@ -1,0 +1,51 @@
+﻿@model IEnumerable<UygulamaOdevi2.Models.CONFERENCE_ROLES>
+
+@{
+    ViewBag.Title = "ShowParticipants";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Show Participants</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ConfName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ConfID_ROLE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AuthenticationID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.userName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ConfName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ConfID_ROLE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AuthenticationID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.userName)
+        </td>
+        <td>
+            @Html.ActionLink("Assign as Chair", "AssignRole", new { username = item.userName , confName = item.ConfName, role = 0 }) 
+            <br />
+            @Html.ActionLink("Assign as Reviewer", "AssignRole", new { username = item.userName, confName = item.ConfName, role = 1 }) 
+            <br />
+            @Html.ActionLink("Assign as Author", "AssignRole", new { username = item.userName, confName = item.ConfName, role = 2 })
+        </td>
+    </tr>
+}
+
+</table>

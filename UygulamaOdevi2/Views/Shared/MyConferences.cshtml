@@ -1,0 +1,47 @@
+﻿@model IEnumerable<UygulamaOdevi2.Models.CONFERENCE_ROLES>
+
+@{
+    ViewBag.Title = "MyConferences";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>My Conferences</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ConfName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ConfID_ROLE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AuthenticationID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.userName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ConfName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ConfID_ROLE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AuthenticationID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.userName)
+        </td>
+        <td>
+            @Html.ActionLink("Participants", "ShowParticipants", new { confName = item.ConfName })
+        </td>
+    </tr>
+}
+
+</table>

@@ -545,7 +545,7 @@ namespace UygulamaOdevi2.Controllers {
         }
         public List<CONFERENCE_ROLES> getConferenceRoles() {
             List<CONFERENCE_ROLES> list = new List<CONFERENCE_ROLES>();
-            string sql = "SELECT Name, ConfID_ROLE,AuthenticationID, Username FROM CONFERENCE_ROLES,USERS,CONFERENCE " +
+            string sql = "SELECT Name, ConfID_ROLE,USERS.AuthenticationID, Username FROM CONFERENCE_ROLES,USERS,CONFERENCE " +
                 "WHERE CONFERENCE_ROLES.AuthenticationID = USERS.AuthenticationID AND CONFERENCE.ConfID = CONFERENCE_ROLES.ConfID";
             var asd = new SqlCommand(sql, con);
             SqlDataReader rdr = asd.ExecuteReader();
@@ -572,11 +572,11 @@ namespace UygulamaOdevi2.Controllers {
             rdr.Close();
             string findConference = "SELECT ConfID FROM CONFERENCE WHERE Name = @confName";
             var asd2 = new SqlCommand(findConference, con);
-            asd.Parameters.AddWithValue("@confName", confName);
-            SqlDataReader rdr2 = asd.ExecuteReader();
+            asd2.Parameters.AddWithValue("@confName", confName);
+            SqlDataReader rdr2 = asd2.ExecuteReader();
             while (rdr2.Read())
             {
-                confID = rdr.GetString(0);
+                confID = rdr2.GetString(0);
             }
             rdr2.Close();
             string s = "INSERT INTO CONFERENCE_ROLES(ConfID,ConfID_ROLE, AuthenticationID) " +
@@ -603,11 +603,11 @@ namespace UygulamaOdevi2.Controllers {
             rdr.Close();
             string findConference = "SELECT ConfID FROM CONFERENCE WHERE Name = @confName";
             var asd2 = new SqlCommand(findConference, con);
-            asd.Parameters.AddWithValue("@confName", confName);
-            SqlDataReader rdr2 = asd.ExecuteReader();
+            asd2.Parameters.AddWithValue("@confName", confName);
+            SqlDataReader rdr2 = asd2.ExecuteReader();
             while (rdr2.Read())
             {
-                confID = rdr.GetString(0);
+                confID = rdr2.GetString(0);
             }
             string s = "UPDATE CONFERENCE_ROLES SET ConfID_ROLE = @ConfID_ROLE " +
                         "WHERE AuthenticationID = @userID AND ConfID = @confID";

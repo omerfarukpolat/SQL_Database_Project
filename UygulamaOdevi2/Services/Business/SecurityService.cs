@@ -29,5 +29,9 @@ namespace UygulamaOdevi2.Services.Business {
         public bool CreateConference(ConferenceModel conf) {
             return daoService.CreateConference(conf);
         }
+
+        public void addUserToConferenceRoles(ConferenceModel conf) {
+            daoService.addUserToConferenceRoles(conf);
+        }
     }
 }
