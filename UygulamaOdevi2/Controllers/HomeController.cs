@@ -8,8 +8,8 @@ using UygulamaOdevi2.Services.Data;
 namespace UygulamaOdevi2.Controllers {
     public class HomeController : Controller {
         public ActionResult Index() {
-            RDBMSController db = new RDBMSController("s");
-            MongoDBController mongoDB = new MongoDBController("s");
+            RDBMSController db = new RDBMSController();
+          //  MongoDBController mongoDB = new MongoDBController("s");
 
             //search users table for an admin, if there is none, create an admin user
             List<USERS> list = db.getUsers();

@@ -7,6 +7,9 @@ using System.Linq;
 using System.Web;
 using Newtonsoft.Json;
 using UygulamaOdevi2.Models;
+using Newtonsoft.Json.Linq;
+using System.IO;
+using MongoDB.Bson.Serialization;
 
 namespace UygulamaOdevi2.Controllers
 {
@@ -28,26 +31,37 @@ namespace UygulamaOdevi2.Controllers
                             { "","sdfgf","54y45","af","hg" },
                         };
             var database = client.GetDatabase("KONFERANS");
-            addSubmission("211", "weq", "qwewqe", "12", new string[] { "123", "1234", "12345" }, authors, "1231", "1231", "1231", "1231", DateTime.Now, 1, 1);
+            //  addSubmission("211", "weq", "qwewqe", "12", new string[] { "123", "1234", "12345" }, authors, "1231", "1231", "1231", "1231", DateTime.Now, 1, 1);
+            var submissions = db.GetCollection<BsonDocument>("submissions");
+            getSubmissions();
+            //var documents = submissions.Find(new BsonDocument()).ToList();
+            //foreach (BsonDocument doc in documents)
+            //{
+            // //   MongoSubmission ms;
+            //    for (int i = 0; i < doc.ElementCount; i++)
+            //    {
+            //        Debug.WriteLine(doc.GetElement(i).Name + "    " + doc.GetElement(i).Value + " " +
+            //        doc.GetElement(i).Value.GetType());
+            //    }
+
+            //}
 
         }
 
-        public void addSubmission(string prevSubmissionID, string submissionID, string title, string ozet, string[] keywords, string[,] authors, string submittedBy, string correspondingAuthor,
+        public void addSubmission(string prevSubmissionID, string submissionID, string title, string ozet, List<string> keywords, List<List<string>> authors, string submittedBy, string correspondingAuthor,
             string pdf_path, string type, DateTime submissionDateTime, int status, int active)
 
         {
-
-
             var array = new BsonArray();
-            for (int i = 0; i < authors.GetLength(0); i++)
+            for (int i = 0; i < authors.Count; i++)
             {
                 BsonArray authorInfos = new BsonArray()
                     {
-                        new BsonDocument {{ "authenticationID", authors[i,0]} },
-                        new BsonDocument {{ "name", authors[i,1] } },
-                        new BsonDocument {{ "email", authors[i,2] } },
-                        new BsonDocument {{ "affil", authors[i,3] } },
-                        new BsonDocument {{ "country", authors[i,4] } }
+                        new BsonDocument {{ "authenticationID", authors[i][0]} },
+                        new BsonDocument {{ "name", authors[i][1] } },
+                        new BsonDocument {{ "email", authors[i][2] } },
+                        new BsonDocument {{ "affil", authors[i][3] } },
+                        new BsonDocument {{ "country", authors[i][4] } }
                     };
                 array.Add(authorInfos);
             }
@@ -90,23 +104,35 @@ namespace UygulamaOdevi2.Controllers
             List<MongoSubmission> list = new List<MongoSubmission>();
             var submissions = db.GetCollection<BsonDocument>("submissions");
 
-
             var documents = submissions.Find(new BsonDocument()).ToList();
-            foreach (BsonDocument doc in documents)
-            {
-                MongoSubmission ms;
 
-                for (int i = 0; i < doc.ElementCount; i++)
-                {
-                    Debug.WriteLine(doc.GetElement(i).Name + "    " + doc.GetElement(i).Value);
-                    Debug.WriteLine("\n");
-                }
-            }
+            BsonClassMap.RegisterClassMap<MongoSubmission>(cm =>
+            {
+                cm.AutoMap();
+                Debug.WriteLine(cm);
+         
+            });
+           // foreach (BsonDocument doc in documents)
+           // {
+
+           //     MongoSubmission ms = new MongoSubmission();
+           //     ms._id = doc.GetElement(0).Value;
+           //     ms.keywords = BsonSerializer.Deserialize<List<string>>(doc.GetElement(6).ToBsonDocument());
+           //     Debug.WriteLine(ms.keywords);
+           ////     for (int i = 0; i < doc.ElementCount; i++)
+           ////     {
+
+           //////         ms.prevSubmissionID = doc.GetValue(i);
+                    
+           ////         Debug.WriteLine(doc.GetElement(i).Name + "    " + doc.GetElement(i).Value);
+           ////         Debug.WriteLine("\n");
+           ////     }
+           // }
             return list;
         }
         public void updateSubmissions(string prevSubmissionID, string submissionID, string title, string ozet, string[] keywords,
             string[,] authors, string submittedBy, string correspondingAuthor,
-         string pdf_path, string type, DateTime submissionDateTime, int status, int active)
+         string pdf_path, string type, DateTime submissionDateTime, int active)
         {
             var submissions = db.GetCollection<BsonDocument>("submissions");
             var filter = Builders<BsonDocument>.Filter.Eq("submission_id", submissionID);
@@ -120,7 +146,7 @@ namespace UygulamaOdevi2.Controllers
                                                        .Set("pdf_path", pdf_path)
                                                        .Set("type", type)
                                                        .Set("submission_date_time", submissionDateTime)
-                                                       .Set("status", status)
+                                                       .Set("status", 0)
                                                        .Set("active", active);
             submissions.UpdateOne(filter, update);
         }
