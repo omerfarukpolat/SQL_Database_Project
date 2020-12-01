@@ -9,7 +9,8 @@ namespace UygulamaOdevi2.Models
     {
         public string ConfName { get; set; }
         public Nullable<int> ConfID_ROLE { get; set; }
-        public string AuthenticationID { get; set; }
+        public int AuthenticationID { get; set; }
+        public string userName { get; set; }
         public virtual USERS USERS { get; set; }
     }
 }

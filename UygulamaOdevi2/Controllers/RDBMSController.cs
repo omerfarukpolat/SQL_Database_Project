@@ -8,7 +8,27 @@ using UygulamaOdevi2.Models;
 using MongoDB.Driver;
 
 namespace UygulamaOdevi2.Controllers {
-
+    /*
+     * Yaptığım Değişiklikler : 
+     * 1- Conference_Roles tablosuna confID eklendi.
+     * 
+     * 2- Get komutunda konferans adı, konferansID, UserID, USERNAME ve rolü geliyor.
+     * 
+     * 3- Insert komutunda konferansın ADINI, kullanıcı ADINI ve kullanıcının rolünü (INT) olarak alıyor ve
+     * düzgün biçimde insert ediyor.
+     * 
+     * 4- update komutunda değişiklik yapılacak kullanıcının USERNAME'i ve konferansın adı, değiştirilen rol (INT) alınıyor,
+     * 1(chair) iken 2(reviewer) gibi,sonrasında update ediliyor.
+     * 
+     * 5- delete komutunda konferans adı ve o konferanstan silinecek olan kullanıcın USERNAME'i alınıyor ve o konferanstan
+     * o kullanıcı siliniyor.
+     * 
+     * 
+     * 
+     * 
+     * 
+     * 
+     * */
 
     public class RDBMSController : Controller {
         SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["KONFERANS"].ConnectionString);
@@ -49,9 +69,11 @@ namespace UygulamaOdevi2.Controllers {
 
 
             cmd.CommandText = @"CREATE TABLE CONFERENCE_ROLES(
+                                 ConfID VARCHAR(20),
                                  ConfID_ROLE INTEGER,
                                  AuthenticationID INTEGER,
-                                 FOREIGN KEY(AuthenticationID) REFERENCES USERS(AuthenticationID) ON DELETE CASCADE
+                                 FOREIGN KEY(AuthenticationID) REFERENCES USERS(AuthenticationID) ON DELETE CASCADE,
+                                 FOREIGN KEY(ConfID) REFERENCES CONFFERENCE(ConfID) ON DELETE CASCADE
                          )";
             cmd.ExecuteNonQuery();
 
@@ -524,40 +546,55 @@ namespace UygulamaOdevi2.Controllers {
         }
         public List<CONFERENCE_ROLES> getConferenceRoles() {
             List<CONFERENCE_ROLES> list = new List<CONFERENCE_ROLES>();
-            string sql = "SELECT ConfID_ROLE, Username FROM CONFERENCE_ROLES,USERS WHERE CONFERENCE_ROLES.AuthenticationID = USERS.AuthenticationID ";
+            string sql = "SELECT Name, ConfID_ROLE,AuthenticationID, Username FROM CONFERENCE_ROLES,USERS,CONFERENCE " +
+                "WHERE CONFERENCE_ROLES.AuthenticationID = USERS.AuthenticationID AND CONFERENCE.ConfID = CONFERENCE_ROLES.ConfID";
             var asd = new SqlCommand(sql, con);
             SqlDataReader rdr = asd.ExecuteReader();
             while (rdr.Read()) {
                 CONFERENCE_ROLES item = new CONFERENCE_ROLES();
-                item.ConfID_ROLE = rdr.GetInt32(0);
-                item.AuthenticationID = rdr.GetString(1);
+                item.ConfName = rdr.GetString(0);
+                item.ConfID_ROLE = rdr.GetInt32(1);
+                item.AuthenticationID = rdr.GetInt32(2);
+                item.userName = rdr.GetString(3);
                 list.Add(item);
             }
             return list;
         }
-        public void insertConferenceRoles(int ConfID_ROLE, string username) {
+        public void insertConferenceRoles(string confName, int ConfID_ROLE, string username) {
             int userID = 0;
-            string findConference = "SELECT AuthenticationID FROM USERS WHERE Username = @username";
-            var asd = new SqlCommand(findConference, con);
+            string confID = "";
+            string findUser = "SELECT AuthenticationID FROM USERS WHERE Username = @username";
+            var asd = new SqlCommand(findUser, con);
             asd.Parameters.AddWithValue("@username", username);
             SqlDataReader rdr = asd.ExecuteReader();
             while (rdr.Read()) {
                 userID = rdr.GetInt32(0);
             }
             rdr.Close();
-            string s = "INSERT INTO CONFERENCE_ROLES(ConfID_ROLE, AuthenticationID) " +
-                        "VALUES (@ConfID_ROLE,@userID)";
+            string findConference = "SELECT ConfID FROM CONFERENCE WHERE Name = @confName";
+            var asd2 = new SqlCommand(findConference, con);
+            asd.Parameters.AddWithValue("@confName", confName);
+            SqlDataReader rdr2 = asd.ExecuteReader();
+            while (rdr2.Read())
+            {
+                confID = rdr.GetString(0);
+            }
+            rdr2.Close();
+            string s = "INSERT INTO CONFERENCE_ROLES(ConfID,ConfID_ROLE, AuthenticationID) " +
+                        "VALUES (@confID,@ConfID_ROLE,@userID)";
             var cmd = new SqlCommand();
             cmd.Connection = con;
             cmd.Parameters.AddWithValue("@userID", userID);
             cmd.Parameters.AddWithValue("@ConfID_ROLE", ConfID_ROLE);
+            cmd.Parameters.AddWithValue("@confID", confID);
             cmd.CommandText = s;
             cmd.ExecuteNonQuery();
         }
-        public void updateConferenceRoles(int ConfID_ROLE, string username) {
+        public void updateConferenceRoles(string confName, int ConfID_ROLE, string username) {
             int userID = 0;
-            string findConference = "SELECT AuthenticationID FROM USERS WHERE Username = @username";
-            var asd = new SqlCommand(findConference, con);
+            string confID = "";
+            string findUser = "SELECT AuthenticationID FROM USERS WHERE Username = @username";
+            var asd = new SqlCommand(findUser, con);
             asd.Parameters.AddWithValue("@username", username);
             SqlDataReader rdr = asd.ExecuteReader();
             while (rdr.Read()) {
@@ -565,21 +602,50 @@ namespace UygulamaOdevi2.Controllers {
                 userID = rdr.GetInt32(0);
             }
             rdr.Close();
+            string findConference = "SELECT ConfID FROM CONFERENCE WHERE Name = @confName";
+            var asd2 = new SqlCommand(findConference, con);
+            asd.Parameters.AddWithValue("@confName", confName);
+            SqlDataReader rdr2 = asd.ExecuteReader();
+            while (rdr2.Read())
+            {
+                confID = rdr.GetString(0);
+            }
             string s = "UPDATE CONFERENCE_ROLES SET ConfID_ROLE = @ConfID_ROLE " +
-                        "WHERE AuthenticationID = @userID";
+                        "WHERE AuthenticationID = @userID AND ConfID = @confID";
             var cmd = new SqlCommand();
             cmd.Connection = con;
             cmd.Parameters.AddWithValue("@userID", userID);
             cmd.Parameters.AddWithValue("@ConfID_ROLE", ConfID_ROLE);
+            cmd.Parameters.AddWithValue("@confID", confID);
             cmd.CommandText = s;
             cmd.ExecuteNonQuery();
         }
-        public void deleteConferenceRole(int userID) {
-
-            string s = "DELETE FROM CONFERENCE_ROLES WHERE AuthenticationID =@userID";
+        public void deleteConferenceRole(string confName, string username) {
+            int userID = 0;
+            string confID = "";
+            string findUser = "SELECT AuthenticationID FROM USERS WHERE Username = @username";
+            var asd = new SqlCommand(findUser, con);
+            asd.Parameters.AddWithValue("@username", username);
+            SqlDataReader rdr = asd.ExecuteReader();
+            while (rdr.Read())
+            {
+                userID = rdr.GetInt32(0);
+            }
+            rdr.Close();
+            string findConference = "SELECT ConfID FROM CONFERENCE WHERE Name = @confName";
+            var asd2 = new SqlCommand(findConference, con);
+            asd.Parameters.AddWithValue("@confName", confName);
+            SqlDataReader rdr2 = asd.ExecuteReader();
+            while (rdr2.Read())
+            {
+                confID = rdr.GetString(0);
+            }
+            rdr2.Close();
+            string s = "DELETE FROM CONFERENCE_ROLES WHERE AuthenticationID =@userID AND ConfID = @confID";
             var cmd = new SqlCommand();
             cmd.Connection = con;
             cmd.Parameters.AddWithValue("@userID", userID);
+            cmd.Parameters.AddWithValue("@confID", confID);
             cmd.CommandText = s;
             cmd.ExecuteNonQuery();
         }
