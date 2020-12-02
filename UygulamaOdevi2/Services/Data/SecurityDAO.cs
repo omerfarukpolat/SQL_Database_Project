@@ -27,6 +27,10 @@ namespace UygulamaOdevi2.Services.Data {
 
             string creatorUser = UserModel.LoggedInUser.Username;
             conf.CreatorUser = creatorUser;
+<<<<<<< HEAD
+=======
+
+>>>>>>> b250d7a067fdc4c76da7399c5a2398768a418909
             if (String.Equals(UserModel.LoggedInUser.Username, "Admin")) {
                 rdbms.insertConference(id, creationDate, name, shortName, year, startDate, endDate, deadLine, creatorUser, website);
                 return true;
@@ -51,6 +55,10 @@ namespace UygulamaOdevi2.Services.Data {
             string website = conf.Website;
 
             rdbms.insertConference(id, creationDate, name, shortName, year, startDate, endDate, deadLine, creatorUser, website);
+        }
+
+        internal void addUserToConferenceRoles(ConferenceModel conf) {
+            rdbms.insertConferenceRoles(conf.Name, 0, conf.CreatorUser);
         }
 
         internal void addUser(UserModel user) {
@@ -140,5 +148,6 @@ namespace UygulamaOdevi2.Services.Data {
                 return false;
             }
         }
+
     }
 }

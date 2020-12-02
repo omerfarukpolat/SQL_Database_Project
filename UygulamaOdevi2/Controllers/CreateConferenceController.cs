@@ -6,13 +6,10 @@ using System.Web.Mvc;
 using UygulamaOdevi2.Models;
 using UygulamaOdevi2.Services.Business;
 
-namespace UygulamaOdevi2.Controllers
-{
-    public class CreateConferenceController : Controller
-    {
+namespace UygulamaOdevi2.Controllers {
+    public class CreateConferenceController : Controller {
         // GET: CreateConference
-        public ActionResult Index()
-        {
+        public ActionResult Index() {
             return View("CreateConference");
         }
 
@@ -22,7 +19,7 @@ namespace UygulamaOdevi2.Controllers
                 return View("HomePage");
             else
                 return View("ConferenceRequestSent");
-            
+
         }
     }
 }

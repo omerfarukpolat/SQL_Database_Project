@@ -9,7 +9,7 @@ namespace UygulamaOdevi2.Controllers {
     public class HomeController : Controller {
         public ActionResult Index() {
             RDBMSController db = new RDBMSController("s");
-          //  MongoDBController mongoDB = new MongoDBController("s");
+            //  MongoDBController mongoDB = new MongoDBController("s");
 
             //search users table for an admin, if there is none, create an admin user
             List<USERS> list = db.getUsers();
@@ -103,8 +103,9 @@ namespace UygulamaOdevi2.Controllers {
                 }
             }
             SecurityService ss = new SecurityService();
+            RDBMSController rdbms = new RDBMSController("s");
             ss.addConference(conf);
-
+            ss.addUserToConferenceRoles(conf);
             return View("ConferenceRequests", SecurityDAO.conference_request);
         }
 
@@ -118,8 +119,88 @@ namespace UygulamaOdevi2.Controllers {
             return View("ConferenceRequests", SecurityDAO.conference_request);
         }
 
+        public ActionResult AllConferences() {
+            RDBMSController rdbms = new RDBMSController("s");
+            if (UserModel.LoggedInUser == null)
+                return View("NotLoggedIn");
+            return View("AllConferences", rdbms.getConferences());
+        }
+
+        public ActionResult JoinConference(string confName) {
+            RDBMSController rdbms = new RDBMSController("s");
+            rdbms.insertConferenceRoles(confName, 1, UserModel.LoggedInUser.Username);
+            return View("AllConferences", rdbms.getConferences());
+        }
+
         public ActionResult MyConferences() {
-            return View("MyConferences");
+            RDBMSController rdbms = new RDBMSController("s");
+            List <CONFERENCE_ROLES> table = rdbms.getConferenceRoles();
+            List<CONFERENCE_ROLES> myConferences = new List<CONFERENCE_ROLES>();
+
+            if (UserModel.LoggedInUser == null)
+                return View("NotLoggedIn");
+
+            string username = UserModel.LoggedInUser.Username;
+
+            for (int i = 0; i < table.Count; i++) 
+                if (String.Equals(username, table[i].userName)) 
+                    myConferences.Add(table[i]);
+
+            return View("MyConferences", myConferences);
+        }
+
+        public ActionResult ShowParticipants(string confName) {
+            RDBMSController rdbms = new RDBMSController("s");
+            List<CONFERENCE_ROLES> roles = rdbms.getConferenceRoles();
+            List<CONFERENCE_ROLES> findConf = new List<CONFERENCE_ROLES>();
+            //get all rows from conference_roles table which have the name confName and put them in findConf list
+            for (int i = 0; i < roles.Count; i++)
+                if (String.Equals(roles[i].ConfName, confName)) 
+                    findConf.Add(roles[i]);
+
+            //search findConf to see if current user is a chair in that conference
+            string username = UserModel.LoggedInUser.Username;
+            bool chair = false;
+            for (int i = 0; i < findConf.Count; i++) {
+                if (String.Equals(username, findConf[i].userName)) {
+                    if (findConf[i].ConfID_ROLE == 0) { //if the user is chair
+                        chair = true;
+                        break;
+                    }
+                }
+            }
+
+            if (chair)
+                return View("ShowParticipants", findConf);
+
+            else
+                return View("NotChair");
+        }
+
+        public ActionResult AssignRole(string username, string confName, int role) {
+            RDBMSController rdbms = new RDBMSController("s");
+            List<CONFERENCE_ROLES> roles = rdbms.getConferenceRoles();
+            List<CONFERENCE_ROLES> findConf = new List<CONFERENCE_ROLES>();
+            //get all rows from conference_roles table which have the name confName and put them in findConf list
+            for (int i = 0; i < roles.Count; i++)
+                if (String.Equals(roles[i].ConfName, confName))
+                    findConf.Add(roles[i]);
+
+            //find user in the list and change their role
+            for (int i = 0; i < findConf.Count; i++) {
+                if (String.Equals(username, findConf[i].userName)) {
+                    rdbms.updateConferenceRoles(findConf[i].ConfName, role, username);
+                    break;
+                }
+            }
+
+            //create a new list that is updated
+            List<CONFERENCE_ROLES> new_list = new List<CONFERENCE_ROLES>();
+            for (int i = 0; i < roles.Count; i++)
+                if (String.Equals(roles[i].ConfName, confName))
+                    new_list.Add(roles[i]);
+
+            return View("ShowParticipants", new_list);
         }
 
     }
