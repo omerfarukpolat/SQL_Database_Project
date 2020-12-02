@@ -29,6 +29,15 @@ namespace UygulamaOdevi2.Services.Data {
             conf.CreatorUser = creatorUser;
             if (String.Equals(UserModel.LoggedInUser.Username, "Admin")) {
                 rdbms.insertConference(id, creationDate, name, shortName, year, startDate, endDate, deadLine, creatorUser, website);
+                //insert conference tag
+                string Tags = conf.Tags;
+                char[] separator = { ' ' };
+                Int32 count = 5;
+                String[] tag_list = Tags.Split(separator, count, StringSplitOptions.None);
+                for (int i = 0; i < tag_list.Length; i++) {
+                    rdbms.insertConferenceTags(conf.Name, tag_list[i]);
+                }
+
                 return true;
             }
             else {
@@ -51,6 +60,14 @@ namespace UygulamaOdevi2.Services.Data {
             string website = conf.Website;
 
             rdbms.insertConference(id, creationDate, name, shortName, year, startDate, endDate, deadLine, creatorUser, website);
+
+            string Tags = conf.Tags;
+            char[] separator = { ' ' };
+            Int32 count = 5;
+            String[] tag_list = Tags.Split(separator, count, StringSplitOptions.None);
+            for (int i = 0; i < tag_list.Length; i++) {
+                rdbms.insertConferenceTags(conf.Name, tag_list[i]);
+            }
         }
 
         internal void addUserToConferenceRoles(ConferenceModel conf) {

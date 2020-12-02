@@ -16,7 +16,7 @@ namespace UygulamaOdevi2.Controllers {
         public ActionResult CreateConference(ConferenceModel conf) {
             SecurityService securityService = new SecurityService();
             if (securityService.CreateConference(conf))
-                return View("HomePage");
+                return View("Index");
             else
                 return View("ConferenceRequestSent");
 

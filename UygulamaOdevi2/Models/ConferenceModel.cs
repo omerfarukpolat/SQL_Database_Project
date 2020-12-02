@@ -6,6 +6,7 @@ using System.Web;
 namespace UygulamaOdevi2.Models {
     public class ConferenceModel {
 
+        public string Tags { get; set; }
         public string ConfID { get; set; }
         public DateTime CreationDateTime { get; set; }
         public string Name { get; set; }
