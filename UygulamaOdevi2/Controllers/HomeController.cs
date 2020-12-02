@@ -88,9 +88,8 @@ namespace UygulamaOdevi2.Controllers {
         public ActionResult CreateConference() {
             if (UserModel.LoggedInUser == null) //if user is not logged in
                 return View("NotLoggedIn");
-            else {
+            else 
                 return View("CreateConference");
-            }
         }
 
         public ActionResult AcceptConference(string confID) {
