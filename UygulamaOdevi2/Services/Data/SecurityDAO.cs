@@ -26,7 +26,7 @@ namespace UygulamaOdevi2.Services.Data {
             string website = conf.Website;
 
             string creatorUser = UserModel.LoggedInUser.Username;
-            
+            conf.CreatorUser = creatorUser;
             if (String.Equals(UserModel.LoggedInUser.Username, "Admin")) {
                 rdbms.insertConference(id, creationDate, name, shortName, year, startDate, endDate, deadLine, creatorUser, website);
                 return true;

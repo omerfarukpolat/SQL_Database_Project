@@ -572,11 +572,11 @@ namespace UygulamaOdevi2.Controllers {
             rdr.Close();
             string findConference = "SELECT ConfID FROM CONFERENCE WHERE Name = @confName";
             var asd2 = new SqlCommand(findConference, con);
-            asd.Parameters.AddWithValue("@confName", confName);
-            SqlDataReader rdr2 = asd.ExecuteReader();
+            asd2.Parameters.AddWithValue("@confName", confName);
+            SqlDataReader rdr2 = asd2.ExecuteReader();
             while (rdr2.Read())
             {
-                confID = rdr.GetString(0);
+                confID = rdr2.GetString(0);
             }
             rdr2.Close();
             string s = "INSERT INTO CONFERENCE_ROLES(ConfID,ConfID_ROLE, AuthenticationID) " +
@@ -603,11 +603,11 @@ namespace UygulamaOdevi2.Controllers {
             rdr.Close();
             string findConference = "SELECT ConfID FROM CONFERENCE WHERE Name = @confName";
             var asd2 = new SqlCommand(findConference, con);
-            asd.Parameters.AddWithValue("@confName", confName);
-            SqlDataReader rdr2 = asd.ExecuteReader();
+            asd2.Parameters.AddWithValue("@confName", confName);
+            SqlDataReader rdr2 = asd2.ExecuteReader();
             while (rdr2.Read())
             {
-                confID = rdr.GetString(0);
+                confID = rdr2.GetString(0);
             }
             string s = "UPDATE CONFERENCE_ROLES SET ConfID_ROLE = @ConfID_ROLE " +
                         "WHERE AuthenticationID = @userID AND ConfID = @confID";
@@ -633,11 +633,11 @@ namespace UygulamaOdevi2.Controllers {
             rdr.Close();
             string findConference = "SELECT ConfID FROM CONFERENCE WHERE Name = @confName";
             var asd2 = new SqlCommand(findConference, con);
-            asd.Parameters.AddWithValue("@confName", confName);
-            SqlDataReader rdr2 = asd.ExecuteReader();
+            asd2.Parameters.AddWithValue("@confName", confName);
+            SqlDataReader rdr2 = asd2.ExecuteReader();
             while (rdr2.Read())
             {
-                confID = rdr.GetString(0);
+                confID = rdr2.GetString(0);
             }
             rdr2.Close();
             string s = "DELETE FROM CONFERENCE_ROLES WHERE AuthenticationID =@userID AND ConfID = @confID";
