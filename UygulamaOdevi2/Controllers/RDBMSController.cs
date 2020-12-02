@@ -154,7 +154,7 @@ namespace UygulamaOdevi2.Controllers {
             cmd.CommandText = "INSERT INTO COUNTRY_CITY(Country_Code , City_Name) " +
                        "VALUES('TUR','Ýstanbul')";
             cmd.ExecuteNonQuery();
-
+      
             cmd.CommandText = @"CREATE TABLE USER_INFO(
                                 InfoID INTEGER identity(1,1) PRIMARY KEY,
                                 Salutation VARCHAR(50),
@@ -246,12 +246,13 @@ namespace UygulamaOdevi2.Controllers {
         public List<USER_INFO> getUserInfos() {
             List<USER_INFO> list = new List<USER_INFO>();
             string sql = "SELECT InfoID,Salutation,AuthenticationID,Name,LastName,Affiliation,primary_email,secondary_email,password" +
-                ",phone,fax,URL,Address,City_Name,Country_Name,Record_Creation_Date FROM USER_INFO,COUNTRY, COUNTRY_CITY" +
-                "WHERE Country = Country_Code AND City = CityID";
+        ",phone,fax,URL,Address,City_Name,Country_Name,Record_Creation_Date FROM USER_INFO,COUNTRY, COUNTRY_CITY" +
+        " WHERE USER_INFO.Country = COUNTRY.Country_Code AND City = COUNTRY_CITY.CityID";
             var asd = new SqlCommand(sql, con);
             SqlDataReader rdr = asd.ExecuteReader();
             while (rdr.Read()) {
                 USER_INFO item = new USER_INFO();
+                item.InfoID = rdr.GetInt32(0);
                 item.Salutation = rdr.GetString(1);
                 item.AuthenticationID = rdr.GetInt32(2);
                 item.Name = rdr.GetString(3);
@@ -271,6 +272,47 @@ namespace UygulamaOdevi2.Controllers {
 
             }
             return list;
+        }
+        public void updateUserInfo(string salutation, int AuthenticationID, string name, string lname, int affiliation,
+                                      string primary_email, string secondary_email, string password, string phone, string fax, string URL,
+                                      string address, string city, string country, DateTime recordCreationDate)
+        {
+            int cityID = 0;
+            string countryCode = "";
+            string findcity = "SELECT CityID,Country_Code FROM COUNTRY_CITY WHERE City_Name = @city";
+            var asd = new SqlCommand(findcity, con);
+            asd.Parameters.AddWithValue("@city", city);
+            SqlDataReader rdr = asd.ExecuteReader();
+            while (rdr.Read())
+            {
+                cityID = rdr.GetInt32(0);
+                countryCode = rdr.GetString(1);
+            }
+            rdr.Close();
+            string s = "UPDATE USER_INFO SET Salutation = @salutation," +
+                "Name = @name,LastName = @lname, Affiliation = @affiliation,primary_email = @primary_email, secondary_email = @secondary_email," +
+                "password = @password, phone = @phone, fax = @fax, URL = @URL," +
+                "Address = @address,City = @city ,Country = @country ,Record_Creation_Date = @recordCreationDate" +
+                " WHERE AuthenticationID= @AuthenticationID";
+            var cmd = new SqlCommand();
+            cmd.Connection = con;
+            cmd.Parameters.AddWithValue("@salutation", salutation);
+            cmd.Parameters.AddWithValue("@AuthenticationID", AuthenticationID);
+            cmd.Parameters.AddWithValue("@name", name);
+            cmd.Parameters.AddWithValue("@lname", lname);
+            cmd.Parameters.AddWithValue("@affiliation", affiliation);
+            cmd.Parameters.AddWithValue("@primary_email", primary_email);
+            cmd.Parameters.AddWithValue("@secondary_email", secondary_email);
+            cmd.Parameters.AddWithValue("@password", password);
+            cmd.Parameters.AddWithValue("@phone", phone);
+            cmd.Parameters.AddWithValue("@fax", fax);
+            cmd.Parameters.AddWithValue("@URL", URL);
+            cmd.Parameters.AddWithValue("@address", address);
+            cmd.Parameters.AddWithValue("@cityID", cityID);
+            cmd.Parameters.AddWithValue("@countryCode", countryCode);
+            cmd.Parameters.AddWithValue("@recordCreationDate", recordCreationDate);
+            cmd.CommandText = s;
+            cmd.ExecuteNonQuery();
         }
         public void insertUserInfo(string salutation, int AuthenticationID, string name, string lname, int affiliation,
                                       string primary_email, string secondary_email, string password, string phone, string fax, string URL,
@@ -545,7 +587,7 @@ namespace UygulamaOdevi2.Controllers {
         }
         public List<CONFERENCE_ROLES> getConferenceRoles() {
             List<CONFERENCE_ROLES> list = new List<CONFERENCE_ROLES>();
-            string sql = "SELECT Name, ConfID_ROLE,USERS.AuthenticationID, Username FROM CONFERENCE_ROLES,USERS,CONFERENCE " +
+            string sql = "SELECT Name, ConfID_ROLE,AuthenticationID, Username FROM CONFERENCE_ROLES,USERS,CONFERENCE " +
                 "WHERE CONFERENCE_ROLES.AuthenticationID = USERS.AuthenticationID AND CONFERENCE.ConfID = CONFERENCE_ROLES.ConfID";
             var asd = new SqlCommand(sql, con);
             SqlDataReader rdr = asd.ExecuteReader();
