@@ -243,11 +243,22 @@ namespace UygulamaOdevi2.Controllers {
             cmd.CommandText = s;
             cmd.ExecuteNonQuery();
         }
+        public void updateUser(int AuthenticationID, string password)
+        {
+            string s = "UPDATE USERS SET password = @password  " +
+                        "WHERE AuthenticationID = @AuthenticationID";
+            var cmd = new SqlCommand();
+            cmd.Connection = con;
+            cmd.Parameters.AddWithValue("@AuthenticationID", AuthenticationID);
+            cmd.Parameters.AddWithValue("@password", password);
+            cmd.CommandText = s;
+            cmd.ExecuteNonQuery();
+        }
         public List<USER_INFO> getUserInfos() {
             List<USER_INFO> list = new List<USER_INFO>();
             string sql = "SELECT InfoID,Salutation,AuthenticationID,Name,LastName,Affiliation,primary_email,secondary_email,password" +
-        ",phone,fax,URL,Address,City_Name,Country_Name,Record_Creation_Date FROM USER_INFO,COUNTRY, COUNTRY_CITY" +
-        " WHERE USER_INFO.Country = COUNTRY.Country_Code AND City = COUNTRY_CITY.CityID";
+            ",phone,fax,URL,Address,City_Name,Country_Name,Record_Creation_Date FROM USER_INFO,COUNTRY, COUNTRY_CITY" +
+            " WHERE USER_INFO.Country = COUNTRY.Country_Code AND City = COUNTRY_CITY.CityID";
             var asd = new SqlCommand(sql, con);
             SqlDataReader rdr = asd.ExecuteReader();
             while (rdr.Read()) {
@@ -292,7 +303,7 @@ namespace UygulamaOdevi2.Controllers {
             string s = "UPDATE USER_INFO SET Salutation = @salutation," +
                 "Name = @name,LastName = @lname, Affiliation = @affiliation,primary_email = @primary_email, secondary_email = @secondary_email," +
                 "password = @password, phone = @phone, fax = @fax, URL = @URL," +
-                "Address = @address,City = @city ,Country = @country ,Record_Creation_Date = @recordCreationDate" +
+                "Address = @address,City = @cityID ,Country = @countryCode ,Record_Creation_Date = @recordCreationDate" +
                 " WHERE AuthenticationID= @AuthenticationID";
             var cmd = new SqlCommand();
             cmd.Connection = con;
