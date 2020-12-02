@@ -598,7 +598,7 @@ namespace UygulamaOdevi2.Controllers {
         }
         public List<CONFERENCE_ROLES> getConferenceRoles() {
             List<CONFERENCE_ROLES> list = new List<CONFERENCE_ROLES>();
-            string sql = "SELECT Name, ConfID_ROLE,AuthenticationID, Username FROM CONFERENCE_ROLES,USERS,CONFERENCE " +
+            string sql = "SELECT Name, ConfID_ROLE,CONFERENCE_ROLES.AuthenticationID, Username FROM CONFERENCE_ROLES,USERS,CONFERENCE " +
                 "WHERE CONFERENCE_ROLES.AuthenticationID = USERS.AuthenticationID AND CONFERENCE.ConfID = CONFERENCE_ROLES.ConfID";
             var asd = new SqlCommand(sql, con);
             SqlDataReader rdr = asd.ExecuteReader();
