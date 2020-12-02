@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data.SqlClient;
 using System.Web.Mvc;
 using UygulamaOdevi2.Models;
 using UygulamaOdevi2.Services.Business;
@@ -8,8 +10,28 @@ using UygulamaOdevi2.Services.Data;
 namespace UygulamaOdevi2.Controllers {
     public class HomeController : Controller {
         public ActionResult Index() {
-            RDBMSController db = new RDBMSController("s");
-            //  MongoDBController mongoDB = new MongoDBController("s");
+            SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["KONFERANS"].ConnectionString);
+            RDBMSController db;
+       //     MongoDBController mongoDB = new MongoDBController("s");
+            bool exists;
+            con.Open();
+            var cmd = new SqlCommand();
+            string sql = "select count (*) from INFORMATION_SCHEMA.TABLES where table_name = 'USERS'";
+            cmd.Connection = con;
+            var asd = new SqlCommand(sql, con);
+            cmd.CommandText = sql;
+            exists = (int)cmd.ExecuteScalar() == 1;
+            con.Close();
+
+            if (exists)
+            {
+                db = new RDBMSController("1");
+            }
+            else
+            {
+                db = new RDBMSController();
+                db = new RDBMSController("1");
+            }
 
             //search users table for an admin, if there is none, create an admin user
             List<USERS> list = db.getUsers();
