@@ -256,6 +256,7 @@ namespace UygulamaOdevi2.Controllers {
             string country = user.Country;
             DateTime date = Convert.ToDateTime(user.Record_Creation_Date);
 
+            rdbms.insertLog(salutation, id, name, lname, affiliation, pemail, semail, pass, phone, fax, url, address, city, country, date);
             rdbms.updateUser(id, user.password);
             rdbms.updateUserInfo(salutation, id, name, lname, affiliation, pemail, semail, pass, phone, fax, url, address, city, country, date);
 
