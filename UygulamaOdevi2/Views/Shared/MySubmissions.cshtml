@@ -1,0 +1,101 @@
+﻿@model IEnumerable<UygulamaOdevi2.Models.MongoSubmission>
+<br />
+<br />
+<br />
+@{
+    ViewBag.Title = "MySubmissions";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>My Submissions</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.prevSubmissionID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.submissionID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ozet)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.keywords)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.authors)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.submittedBy)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.correspondingAuthor)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.pdf_path)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.type)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.submissionDateTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.status)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.active)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.prevSubmissionID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.submissionID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ozet)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.keywords)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.authors)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.submittedBy)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.correspondingAuthor)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.pdf_path)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.type)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.submissionDateTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.status)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.active)
+        </td>
+
+    </tr>
+}
+
+</table>

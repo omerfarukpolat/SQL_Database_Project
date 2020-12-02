@@ -278,16 +278,55 @@ namespace UygulamaOdevi2.Controllers {
         public ActionResult CreateNewSubmission(MongoSubmission sub) {
             if (UserModel.LoggedInUser == null)
                 return View("NotLoggedIn");
-            sub.submittedBy = UserModel.LoggedInUser.Username;
             MongoDBController mongo = new MongoDBController("s");
-            /* public void addSubmission(string prevSubmissionID, string submissionID, string title, string ozet, List<string> keywords, List<List<string>> authors, string submittedBy, string correspondingAuthor,
-            string pdf_path, string type, DateTime submissionDateTime, int status, int active)*/
+
+            sub.submittedBy = UserModel.LoggedInUser.Username;
+            string submittedBy = sub.submittedBy;
+            string submissionID = sub.submissionID;
             string title = sub.title;
             string ozet = sub.ozet;
+            string pdf = sub.pdf_path;
+            string type = sub.type;
+            sub.submissionDateTime = DateTime.Today + "";
+            int status = (int) sub.status;
+            int active = (int) sub.active;
+            string corrAut = sub.correspondingAuthor;
+            string kw = sub.keywords;
+            char[] separator = { ' ' };
+            Int32 count = 5;
+            List<string> keywords = new List<string>();
+            String[] tag_list = kw.Split(separator, count, StringSplitOptions.None);
+            for (int i = 0; i < tag_list.Length; i++)
+                keywords.Add(tag_list[i]);
 
+            List<List<string>> authors = new List<List<string>>();
+            List<string> list = new List<string>();
 
+            Int32 count2 = 5;
+            String[] list2 = sub.authors.Split(separator, count2, StringSplitOptions.None);
+            for (int i = 0; i < list2.Length; i++)
+                list.Add(list2[i]);
+            authors.Add(list);
 
-            return View("Index");
+            mongo.addSubmission(submissionID, title, ozet, keywords, authors, submittedBy, corrAut, pdf, type, DateTime.Today, status, active);
+
+            return View("SubmissionCreated");
+        }
+
+        public ActionResult MySubmissions() {
+            if (UserModel.LoggedInUser == null)
+                return View("NotLoggedIn");
+
+            MongoDBController mongo = new MongoDBController("s");
+            List<MongoSubmission> list = mongo.getSubmissions();
+            string username = UserModel.LoggedInUser.Username;
+            List<MongoSubmission> mySub = new List<MongoSubmission>();
+            for (int i = 0; i < list.Count; i++) {
+                if (String.Equals(username, list[i].submittedBy)) {
+                    mySub.Add(list[i]);
+                }
+            }
+            return View("MySubmissions", mySub);
         }
 
     }

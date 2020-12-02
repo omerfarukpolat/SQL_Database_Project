@@ -107,7 +107,7 @@ namespace UygulamaOdevi2.Controllers
             }
             else
             {
-                rdbms.insertSubmission(userID, submissionID, list[0].SubmissionID);
+                rdbms.insertSubmission(userID, submissionID, 0);
             }
         }
 
@@ -132,19 +132,19 @@ namespace UygulamaOdevi2.Controllers
             {
 
                 MongoSubmission ms = new MongoSubmission();
-                ms.prevSubmissionID = doc.GetElement(0).Value.ToString();
-                ms.submissionID = doc.GetElement(1).Value.ToString();
-                ms.title = doc.GetElement(2).Value.ToString();
-                ms.ozet = doc.GetElement(3).Value.ToString();
-                ms.keywords = doc.GetElement(4).Value.ToString();
-                ms.authors = doc.GetElement(5).Value.ToString();
-                ms.submittedBy = doc.GetElement(6).Value.ToString();
-                ms.correspondingAuthor = doc.GetElement(7).Value.ToString();
-                ms.pdf_path = doc.GetElement(8).Value.ToString();
-                ms.type = doc.GetElement(9).Value.ToString();
-                ms.submissionDateTime = doc.GetElement(10).Value.ToString();
-                ms.status = doc.GetElement(11).Value.ToInt32();
-                ms.active = doc.GetElement(12).Value.ToInt32();
+                ms.prevSubmissionID = doc.GetElement(1).Value.ToString();
+                ms.submissionID = doc.GetElement(2).Value.ToString();
+                ms.title = doc.GetElement(3).Value.ToString();
+                ms.ozet = doc.GetElement(4).Value.ToString();
+                ms.keywords = doc.GetElement(5).Value.ToString();
+                ms.authors = doc.GetElement(6).Value.ToString();
+                ms.submittedBy = doc.GetElement(7).Value.ToString();
+                ms.correspondingAuthor = doc.GetElement(8).Value.ToString();
+                ms.pdf_path = doc.GetElement(9).Value.ToString();
+                ms.type = doc.GetElement(10).Value.ToString();
+                ms.submissionDateTime = doc.GetElement(11).Value.ToString();
+                ms.status = doc.GetElement(12).Value.ToInt32();
+                ms.active = doc.GetElement(13).Value.ToInt32();
             }
             return list;
         }
