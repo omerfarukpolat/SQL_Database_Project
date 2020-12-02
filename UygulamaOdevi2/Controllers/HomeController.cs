@@ -288,7 +288,6 @@ namespace UygulamaOdevi2.Controllers {
 
 
             return View("Index");
-
         }
 
     }
