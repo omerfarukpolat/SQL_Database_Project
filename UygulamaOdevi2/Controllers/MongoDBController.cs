@@ -34,13 +34,26 @@ namespace UygulamaOdevi2.Controllers
             //  addSubmission("211", "weq", "qwewqe", "12", new string[] { "123", "1234", "12345" }, authors, "1231", "1231", "1231", "1231", DateTime.Now, 1, 1);
             var submissions = db.GetCollection<BsonDocument>("submissions");
             getSubmissions();
-         
+
         }
 
-        public void addSubmission(string prevSubmissionID, string submissionID, string title, string ozet, List<string> keywords, List<List<string>> authors, string submittedBy, string correspondingAuthor,
+        public void addSubmission(string submissionID, string title, string ozet, List<string> keywords, List<List<string>> authors, string submittedBy, string correspondingAuthor,
             string pdf_path, string type, DateTime submissionDateTime, int status, int active)
 
         {
+            int prevSubmissionID = 0;
+            string prevConfID = "";
+            RDBMSController rdbms = new RDBMSController("s");
+            List<SUBMISSIONS> list = rdbms.getSubmissions();
+            if (list.Count == 0)
+            {
+                prevSubmissionID = 0;
+            }
+            else
+            {
+                prevSubmissionID = list[list.Count - 1].SubmissionID;
+                prevConfID = list[list.Count - 1].ConfID;
+            }
             var array = new BsonArray();
             for (int i = 0; i < authors.Count; i++)
             {
@@ -76,11 +89,10 @@ namespace UygulamaOdevi2.Controllers
                     { "active", active },
                 };
             submissions.InsertOne(document);
-            RDBMSController rdbms = new RDBMSController("s");
-            List<SUBMISSIONS> list = rdbms.getSubmissions();
+
             List<USERS> users = rdbms.getUsers();
             int userID = 0;
-            foreach(USERS u in users)
+            foreach (USERS u in users)
             {
                 if (u.Username.Equals(submittedBy))
                 {
@@ -89,16 +101,23 @@ namespace UygulamaOdevi2.Controllers
                 }
             }
             //userID = 0 ise admin tarafından insert edilmiştir.
-            rdbms.insertSubmission(userID, submissionID, list[list.Count - 1].SubmissionID);
+            if (list.Count > 0)
+            {
+                rdbms.insertSubmission(userID, submissionID, list[list.Count - 1].SubmissionID);
+            }
+            else
+            {
+                rdbms.insertSubmission(userID, submissionID, list[0].SubmissionID);
+            }
         }
 
 
-        public void deleteSubmission(string submissionID,string submittedBy)
+        public void deleteSubmission(string submissionID, string submittedBy)
         {
             //submittedBy = login olan kullanıcının kendi username'i. Sadece kendi eklediği submissionları silebilir.
             // veya eğer log in olan kullanıcı adminse istediği submissionları silebilir. 
             var submissions = db.GetCollection<BsonDocument>("submissions");
-            var deleteFilter = Builders<BsonDocument>.Filter.Eq("submission_id",submissionID);
+            var deleteFilter = Builders<BsonDocument>.Filter.Eq("submission_id", submissionID);
             deleteFilter = deleteFilter & (Builders<BsonDocument>.Filter.Eq("submitted_by", submittedBy));
             submissions.DeleteOne(deleteFilter);
         }
@@ -126,20 +145,29 @@ namespace UygulamaOdevi2.Controllers
                 ms.submissionDateTime = doc.GetElement(10).Value.ToString();
                 ms.status = doc.GetElement(11).Value.ToInt32();
                 ms.active = doc.GetElement(12).Value.ToInt32();
-
-
-
             }
             return list;
         }
-        public void updateSubmissions(string prevSubmissionID, string submissionID, string title, string ozet, string[] keywords,
+        public void updateSubmissions(string submissionID, string title, string ozet, string[] keywords,
             string[,] authors, string submittedBy, string correspondingAuthor,
          string pdf_path, string type, DateTime submissionDateTime, int active)
         {
+            int prevSubmissionID = 0;
+            string prevConfID = "";
+            RDBMSController rdbms = new RDBMSController("s");
+            List<SUBMISSIONS> list = rdbms.getSubmissions();
+            foreach (SUBMISSIONS item in list)
+            {
+                if (item.ConfID == submissionID)
+                {
+                    item.prevSubmissionID = prevSubmissionID;
+                    break;
+                }
+            }
             var submissions = db.GetCollection<BsonDocument>("submissions");
             var filter = Builders<BsonDocument>.Filter.Eq("submission_id", submissionID);
-            var update = Builders<BsonDocument>.Update.Set("prev_submission_id", prevSubmissionID)
-                                                       .Set("title", title)
+            filter = filter & Builders<BsonDocument>.Filter.Eq("prev_submission_id", prevSubmissionID);
+            var update = Builders<BsonDocument>.Update.Set("title", title)
                                                        .Set("abstract", ozet)
                                                        .Set("keywords", keywords)
                                                        .Set("authors", authors)
