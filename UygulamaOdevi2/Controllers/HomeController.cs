@@ -134,7 +134,7 @@ namespace UygulamaOdevi2.Controllers {
 
         public ActionResult MyConferences() {
             RDBMSController rdbms = new RDBMSController("s");
-            List <CONFERENCE_ROLES> table = rdbms.getConferenceRoles();
+            List<CONFERENCE_ROLES> table = rdbms.getConferenceRoles();
             List<CONFERENCE_ROLES> myConferences = new List<CONFERENCE_ROLES>();
 
             if (UserModel.LoggedInUser == null)
@@ -142,8 +142,8 @@ namespace UygulamaOdevi2.Controllers {
 
             string username = UserModel.LoggedInUser.Username;
 
-            for (int i = 0; i < table.Count; i++) 
-                if (String.Equals(username, table[i].userName)) 
+            for (int i = 0; i < table.Count; i++)
+                if (String.Equals(username, table[i].userName))
                     myConferences.Add(table[i]);
 
             return View("MyConferences", myConferences);
@@ -155,7 +155,7 @@ namespace UygulamaOdevi2.Controllers {
             List<CONFERENCE_ROLES> findConf = new List<CONFERENCE_ROLES>();
             //get all rows from conference_roles table which have the name confName and put them in findConf list
             for (int i = 0; i < roles.Count; i++)
-                if (String.Equals(roles[i].ConfName, confName)) 
+                if (String.Equals(roles[i].ConfName, confName))
                     findConf.Add(roles[i]);
 
             //search findConf to see if current user is a chair in that conference
@@ -201,6 +201,65 @@ namespace UygulamaOdevi2.Controllers {
                     new_list.Add(roles[i]);
 
             return View("ShowParticipants", new_list);
+        }
+
+        public ActionResult UserProfile() {
+            if (UserModel.LoggedInUser == null)
+                return View("NotLoggedIn");
+
+            USER_INFO user = null;
+            RDBMSController rdbms = new RDBMSController("s");
+            List<USER_INFO> info = rdbms.getUserInfos();
+            List<USERS> users = rdbms.getUsers();
+
+            int id = -1;
+            for (int i = 0; i < users.Count; i++) {
+                if (String.Equals(UserModel.LoggedInUser.Username, users[i].Username)) {
+                    id = users[i].AuthenticationID;
+                }
+            }
+
+            for (int i = 0; i < info.Count; i++) {
+                if (id == info[i].AuthenticationID) {
+                    user = info[i];
+                    break;
+                }
+            }
+
+            return View("UserProfile", user);
+        }
+
+        public ActionResult SaveProfile(USER_INFO user) {
+            RDBMSController rdbms = new RDBMSController("s");
+            List<USERS> users = rdbms.getUsers();
+            string username = UserModel.LoggedInUser.Username;
+            int id = -1;
+            for (int i = 0; i < users.Count; i++) {
+                if (String.Equals(users[i].Username, username)) {
+                    id = users[i].AuthenticationID;
+                    break;
+                }
+            }
+
+            string salutation = user.Salutation;
+            string name = user.Name;
+            string lname = user.LastName;
+            int affiliation = (int)user.Affiliation;
+            string pemail = user.primary_email;
+            string semail = user.secondary_email;
+            string pass = user.password;
+            string phone = user.phone;
+            string fax = user.fax;
+            string url = user.URL;
+            string address = user.Address;
+            string city = user.City;
+            string country = user.Country;
+            DateTime date = Convert.ToDateTime(user.Record_Creation_Date);
+
+            rdbms.updateUser(id, user.password);
+            rdbms.updateUserInfo(salutation, id, name, lname, affiliation, pemail, semail, pass, phone, fax, url, address, city, country, date);
+
+            return View("ChangesSaved");
         }
 
     }

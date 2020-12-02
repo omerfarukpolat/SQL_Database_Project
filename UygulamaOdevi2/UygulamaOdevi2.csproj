@@ -299,6 +299,8 @@
     <Content Include="Views\Shared\CreateConference.cshtml" />
     <Content Include="Views\Shared\ConferenceRequestSent.cshtml" />
     <Content Include="Views\Shared\ConferenceRequests.cshtml" />
+    <Content Include="Views\Shared\UserProfile.cshtml" />
+    <Content Include="Views\Shared\ChangesSaved.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
