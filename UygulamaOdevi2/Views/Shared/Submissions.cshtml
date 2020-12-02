@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Title = "Submissions";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Submissions</h2>
+
+<div>
+    <div class="col-md-10">
+        @Html.ActionLink("My submissions", "Index", "Login", new { area = "" }, new { @class = "navbar-brand" })
+    </div>
+</div>
+<div>
+    <div class="col-md-10">
+        @Html.ActionLink("Create new submission", "CreateSubmission", "Home", new { area = "" }, new { @class = "navbar-brand" })
+    </div>
+</div>
+

@@ -5,11 +5,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>AllConferences</h2>
+<h2>All Conferences</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
@@ -45,42 +42,42 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.ConfID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreationDateTime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ShortName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Year)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.StartDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EndDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Submission_Deadline)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatorUser)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.WebSite)
-        </td>
-        <td>
-            @Html.ActionLink("Join", "JoinConference", new { confName = item.Name }) 
-        </td>
-    </tr>
-}
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ConfID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreationDateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ShortName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Year)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Submission_Deadline)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatorUser)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WebSite)
+            </td>
+            <td>
+                @Html.ActionLink("Join", "JoinConference", new { confName = item.Name })
+            </td>
+        </tr>
+    }
 
 </table>

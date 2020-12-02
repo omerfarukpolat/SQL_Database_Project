@@ -302,6 +302,9 @@
     <Content Include="Views\Shared\UserProfile.cshtml" />
     <Content Include="Views\Shared\ChangesSaved.cshtml" />
     <Content Include="Views\Shared\Index.cshtml" />
+    <Content Include="Views\Shared\AllConferences.cshtml" />
+    <Content Include="Views\Shared\Submissions.cshtml" />
+    <Content Include="Views\Shared\CreateSubmission.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -263,6 +263,34 @@ namespace UygulamaOdevi2.Controllers {
             return View("ChangesSaved");
         }
 
+        public ActionResult Submissions() {
+            if (UserModel.LoggedInUser == null)
+                return View("NotLoggedIn");
+            return View("Submissions");
+        }
+
+        public ActionResult CreateSubmission() {
+            if (UserModel.LoggedInUser == null)
+                return View("NotLoggedIn");
+            return View("CreateSubmission");
+        }
+
+        public ActionResult CreateNewSubmission(MongoSubmission sub) {
+            if (UserModel.LoggedInUser == null)
+                return View("NotLoggedIn");
+            sub.submittedBy = UserModel.LoggedInUser.Username;
+            MongoDBController mongo = new MongoDBController("s");
+            /* public void addSubmission(string prevSubmissionID, string submissionID, string title, string ozet, List<string> keywords, List<List<string>> authors, string submittedBy, string correspondingAuthor,
+            string pdf_path, string type, DateTime submissionDateTime, int status, int active)*/
+            string title = sub.title;
+            string ozet = sub.ozet;
+
+
+
+            return View("Index");
+
+        }
+
     }
 
 }
