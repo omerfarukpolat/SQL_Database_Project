@@ -34,7 +34,18 @@ namespace UygulamaOdevi2.Controllers
             //  addSubmission("211", "weq", "qwewqe", "12", new string[] { "123", "1234", "12345" }, authors, "1231", "1231", "1231", "1231", DateTime.Now, 1, 1);
             var submissions = db.GetCollection<BsonDocument>("submissions");
             getSubmissions();
-         
+            //var documents = submissions.Find(new BsonDocument()).ToList();
+            //foreach (BsonDocument doc in documents)
+            //{
+            // //   MongoSubmission ms;
+            //    for (int i = 0; i < doc.ElementCount; i++)
+            //    {
+            //        Debug.WriteLine(doc.GetElement(i).Name + "    " + doc.GetElement(i).Value + " " +
+            //        doc.GetElement(i).Value.GetType());
+            //    }
+
+            //}
+
         }
 
         public void addSubmission(string prevSubmissionID, string submissionID, string title, string ozet, List<string> keywords, List<List<string>> authors, string submittedBy, string correspondingAuthor,
@@ -113,19 +124,20 @@ namespace UygulamaOdevi2.Controllers
             {
 
                 MongoSubmission ms = new MongoSubmission();
-                ms.prevSubmissionID = doc.GetElement(0).Value.ToString();
-                ms.submissionID = doc.GetElement(1).Value.ToString();
-                ms.title = doc.GetElement(2).Value.ToString();
-                ms.ozet = doc.GetElement(3).Value.ToString();
-                ms.keywords = doc.GetElement(4).Value.ToString();
-                ms.authors = doc.GetElement(5).Value.ToString();
-                ms.submittedBy = doc.GetElement(6).Value.ToString();
-                ms.correspondingAuthor = doc.GetElement(7).Value.ToString();
-                ms.pdf_path = doc.GetElement(8).Value.ToString();
-                ms.type = doc.GetElement(9).Value.ToString();
-                ms.submissionDateTime = doc.GetElement(10).Value.ToString();
-                ms.status = doc.GetElement(11).Value.ToInt32();
-                ms.active = doc.GetElement(12).Value.ToInt32();
+                ms._id = doc.GetElement(0).Value;
+                ms._id = doc.GetElement(1).Value;
+                ms._id = doc.GetElement(2).Value;
+                ms._id = doc.GetElement(3).Value;
+                ms._id = doc.GetElement(4).Value;
+                ms._id = doc.GetElement(5).Value;
+                ms._id = doc.GetElement(6).Value;
+                ms._id = doc.GetElement(7).Value;
+                ms._id = doc.GetElement(8).Value;
+                ms._id = doc.GetElement(9).Value;
+                ms._id = doc.GetElement(10).Value;
+                ms._id = doc.GetElement(0).Value;
+                ms._id = doc.GetElement(0).Value;
+                ms._id = doc.GetElement(0).Value;
 
 
 
